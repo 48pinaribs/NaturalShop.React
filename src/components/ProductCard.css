@@ -1,0 +1,122 @@
+.product-card-wrapper {
+  cursor: pointer;
+}
+
+.product-card {
+  border: 1px solid var(--border-color);
+  border-radius: 12px;
+  padding: 12px;
+  background: var(--card-bg);
+  box-shadow: 0 2px 8px var(--shadow);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.product-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 24px var(--shadow-hover);
+  border-color: var(--border-hover);
+}
+
+/* Hovered state */
+.product-card.hovered {
+  transform: translateY(-6px) scale(1.02);
+  box-shadow: 0 12px 28px var(--shadow-hover);
+  border-color: var(--primary-light);
+}
+
+/* Image container */
+.product-img-wrapper {
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  background: var(--background);
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  transition: transform 0.3s ease;
+}
+
+.product-card:hover .product-img-wrapper {
+  transform: scale(1.02);
+}
+
+/* Image */
+.product-img {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+  display: block;
+  transition: transform 0.3s ease;
+}
+
+.product-card:hover .product-img {
+  transform: scale(1.05);
+}
+
+/* Title */
+.product-title {
+  margin: 8px 0 4px;
+  font-size: var(--font-size-md);
+  font-weight: var(--font-weight-medium);
+  font-family: var(--font-family);
+  color: var(--text-dark);
+  letter-spacing: var(--letter-spacing-normal);
+  line-height: var(--line-height-normal);
+  transition: color 0.2s ease;
+  animation: fadeUp 0.15s ease-out forwards;
+}
+
+.product-card:hover .product-title {
+  color: var(--primary);
+}
+
+/* Description */
+.product-description {
+  font-size: var(--font-size-base);
+  font-weight: var(--font-weight-normal);
+  font-family: var(--font-family);
+  color: var(--text-dark);
+  letter-spacing: var(--letter-spacing-normal);
+  line-height: var(--line-height-normal);
+  margin: 8px 0 4px;
+}
+
+/* Price */
+.product-price {
+  margin: 0;
+  font-size: var(--font-size-base);
+  font-weight: var(--font-weight-semibold);
+  font-family: var(--font-family);
+  color: var(--primary);
+  letter-spacing: var(--letter-spacing-normal);
+  line-height: var(--line-height-normal);
+  animation: fadeUp 0.15s ease-out forwards;
+}
+
+/* Card Button */
+.product-card button {
+  margin-top: 4px;
+  padding: 0.625rem 1rem;
+  background: var(--primary);
+  color: var(--card-bg);
+  border: none;
+  border-radius: 8px;
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-medium);
+  font-family: var(--font-family);
+  letter-spacing: var(--letter-spacing-normal);
+  text-transform: none;
+  cursor: pointer;
+  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.product-card button:hover {
+  background: var(--primary-hover);
+  transform: translateY(-1px);
+  box-shadow: 0 2px 8px rgba(74, 124, 89, 0.25);
+}
+  

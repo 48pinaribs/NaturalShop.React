@@ -1,0 +1,205 @@
+/* Header Styles - Modern Typography */
+.header {
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  background: linear-gradient(135deg, var(--primary-light) 0%, var(--primary) 100%);
+  box-shadow: 0 4px 20px var(--shadow);
+  border-bottom: 0.5px solid rgba(255, 255, 255, 0.15);
+  transition: all 0.3s ease-in-out;
+}
+
+.header-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 1.5rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  min-height: 72px;
+}
+
+/* Logo Section */
+.header-logo {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  transition: opacity 0.2s ease-in-out;
+  text-decoration: none;
+  color: var(--card-bg);
+  font-size: 1.375rem;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  font-family: 'Poppins', sans-serif;
+}
+
+.header-logo:hover {
+  opacity: 0.9;
+}
+
+.header-logo-icon {
+  margin-right: 0.5rem;
+  font-size: 1.5rem;
+  line-height: 1;
+}
+
+/* Navigation Menu */
+.header-nav {
+  display: flex;
+  gap: 0.125rem;
+  align-items: center;
+}
+
+.nav-button {
+  padding: 0.625rem 1.125rem;
+  background: transparent;
+  border: none;
+  color: var(--card-bg);
+  font-weight: 500;
+  font-size: 0.9375rem; /* 15px */
+  font-family: 'Poppins', sans-serif;
+  letter-spacing: 0.01em;
+  cursor: pointer;
+  border-radius: 6px;
+  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+  text-decoration: none;
+  display: inline-block;
+  opacity: 0.92;
+}
+
+.nav-button::after {
+  content: '';
+  position: absolute;
+  bottom: 0.5rem;
+  left: 1.125rem;
+  width: 0;
+  height: 2px;
+  background: var(--card-bg);
+  transition: width 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  opacity: 0.8;
+}
+
+.nav-button:hover {
+  opacity: 1;
+  color: var(--card-bg);
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.nav-button:hover::after {
+  width: calc(100% - 2.25rem);
+}
+
+/* Right Side Icons */
+.header-icons {
+  display: flex;
+  align-items: center;
+  gap: 0.375rem;
+}
+
+.icon-button {
+  width: 38px;
+  height: 38px;
+  border: none;
+  background: transparent;
+  color: var(--card-bg);
+  cursor: pointer;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+  opacity: 0.92;
+}
+
+.icon-button:hover {
+  background: rgba(255, 255, 255, 0.15);
+  opacity: 1;
+  transform: translateY(-1px);
+}
+
+.icon-button svg {
+  width: 20px;
+  height: 20px;
+  stroke-width: 1.5;
+  transition: stroke-width 0.2s ease;
+}
+
+.icon-button:hover svg {
+  stroke-width: 2;
+}
+
+/* Cart Icon specific styling */
+.cart-icon {
+  width: 20px;
+  height: 20px;
+}
+
+/* Cart Badge */
+.cart-badge {
+  position: absolute;
+  top: 4px;
+  right: 4px;
+  min-width: 18px;
+  height: 18px;
+  border-radius: 9px;
+  background: var(--accent);
+  border: 2px solid var(--primary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.625rem;
+  font-weight: 700;
+  color: var(--card-bg);
+  padding: 0 4px;
+  line-height: 1;
+}
+
+/* Mobile Menu Toggle */
+.mobile-menu-toggle {
+  display: none;
+  background: transparent;
+  border: none;
+  color: var(--card-bg);
+  cursor: pointer;
+  font-size: 1.5rem;
+  padding: 0.5rem;
+}
+
+/* Responsive Design */
+@media (max-width: 968px) {
+  .header-nav {
+    display: none;
+  }
+
+  .mobile-menu-toggle {
+    display: block;
+  }
+}
+
+@media (max-width: 640px) {
+  .header-container {
+    padding: 0 1rem;
+    min-height: 64px;
+  }
+
+  .header-logo {
+    font-size: 1.1875rem;
+  }
+
+  .header-logo-icon {
+    font-size: 1.375rem;
+  }
+
+  .icon-button {
+    width: 36px;
+    height: 36px;
+  }
+
+  .icon-button svg {
+    width: 18px;
+    height: 18px;
+  }
+}
+
