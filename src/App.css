@@ -15,7 +15,6 @@
   color: var(--text-dark);
   letter-spacing: var(--letter-spacing-tight);
   line-height: var(--line-height-tight);
-  animation: fadeUp 0.15s ease-out forwards;
 }
 
 /* Grid layout */

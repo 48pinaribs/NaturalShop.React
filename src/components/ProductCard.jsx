@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import "./ProductCard.css";
 import { useNavigate } from "react-router-dom";
 import { useCart } from "../context/CartContext";
+import { toast } from "react-toastify";
 
 function ProductCard({ id, description, price, image }) {
   const navigate = useNavigate();
@@ -9,6 +10,10 @@ function ProductCard({ id, description, price, image }) {
   const [imgSrc, setImgSrc] = useState(image || "");
   const { addToCart } = useCart();
 
+  const handleAdd = () => {
+    addToCart({ id, description, price, image });
+    toast.success("Ürün sepete eklendi 🛒");
+  }
 
   const placeholder =
     "data:image/svg+xml;utf8," +
@@ -45,7 +50,7 @@ function ProductCard({ id, description, price, image }) {
 
         <p className="product-description">{description}</p>
         <p className="product-price">${Number(price).toFixed(2)}</p>
-        <button onClick={() => addToCart({ id, description, price, image })}>Sepete Ekle</button>
+        <button className="add-btn" onClick={handleAdd}>Sepete Ekle</button>
       </div>
      
     </div>

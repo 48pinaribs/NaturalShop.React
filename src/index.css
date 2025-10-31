@@ -57,18 +57,6 @@
   box-sizing: border-box;
 }
 
-/* Fade-up Animation - Subtle Micro Motion */
-@keyframes fadeUp {
-  from {
-    opacity: 0;
-    transform: translateY(4px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
 /* Global Typography Reset */
 body {
   margin: 0;
@@ -92,7 +80,6 @@ h1, h2, h3, h4, h5, h6 {
   color: var(--text-dark);
   line-height: var(--line-height-tight);
   letter-spacing: var(--letter-spacing-tight);
-  animation: fadeUp 0.15s ease-out forwards;
 }
 
 h1 {

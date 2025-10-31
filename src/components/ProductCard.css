@@ -67,7 +67,6 @@
   letter-spacing: var(--letter-spacing-normal);
   line-height: var(--line-height-normal);
   transition: color 0.2s ease;
-  animation: fadeUp 0.15s ease-out forwards;
 }
 
 .product-card:hover .product-title {
@@ -94,7 +93,6 @@
   color: var(--primary);
   letter-spacing: var(--letter-spacing-normal);
   line-height: var(--line-height-normal);
-  animation: fadeUp 0.15s ease-out forwards;
 }
 
 /* Card Button */
