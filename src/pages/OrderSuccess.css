@@ -23,11 +23,11 @@
   max-width: 560px;
   width: 100%;
   text-align: center;
-  background: var(--background);
+  background: linear-gradient(180deg, #FFFFFF 0%, #F1F8F4 100%);
   padding: 3rem 2rem;
   border-radius: 16px;
-  border: 1px solid var(--border-color);
-  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.07);
+  border: 2px solid rgba(79, 111, 82, 0.25);
+  box-shadow: 0 12px 40px rgba(79, 111, 82, 0.25), 0 4px 16px rgba(111, 175, 122, 0.2), inset 0 1px 0 rgba(79, 111, 82, 0.05);
 }
 
 /* Success Icon */
@@ -51,8 +51,8 @@
 
 .success-icon {
   font-size: 5rem;
-  color: var(--primary);
-  background: rgba(74, 124, 89, 0.1);
+  color: #4F6F52;
+  background: linear-gradient(135deg, rgba(232, 245, 233, 0.8) 0%, rgba(200, 230, 201, 0.6) 100%);
   padding: 1.5rem;
   border-radius: 50%;
   display: flex;
@@ -61,7 +61,8 @@
   width: 120px;
   height: 120px;
   margin: 0 auto;
-  border: 3px solid rgba(74, 124, 89, 0.2);
+  border: 3px solid rgba(79, 111, 82, 0.3);
+  box-shadow: 0 4px 16px rgba(79, 111, 82, 0.2);
 }
 
 /* Success Title */

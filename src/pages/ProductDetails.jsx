@@ -1,31 +1,39 @@
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
+import { useCart } from "../context/CartContext";
+import { toast } from "react-toastify";
 import "./ProductDetails.css";
+import apiConfig from "../config/api.js";
 
 function ProductDetails() {
   const { id } = useParams();
+  const navigate = useNavigate();
   const [product, setProduct] = useState(null);
   const [isAddingToCart, setIsAddingToCart] = useState(false);
+  const { addToCart } = useCart();
 
   useEffect(() => {
-    fetch(`http://localhost:5072/api/Product/${id}`)
+    fetch(apiConfig.endpoints.products.detail(id))
       .then(res => res.json())
       .then(data => setProduct(data));
   }, [id]);
 
   const handleAddToCart = () => {
-    setIsAddingToCart(true);
-    // TODO: Implement cart logic here
-    setTimeout(() => {
-      setIsAddingToCart(false);
-      // You can add a success message or notification here
-    }, 500);
+    if (product && product.stock > 0) {
+      setIsAddingToCart(true);
+      addToCart(product);
+      toast.success("Ürün sepete eklendi 🛒");
+      setTimeout(() => {
+        setIsAddingToCart(false);
+        navigate("/cart");
+      }, 800);
+    }
   };
 
   if (!product) {
     return (
       <div className="product-details-container">
-        <div className="product-details-loading">Loading...</div>
+        <div className="product-details-loading">Yükleniyor...</div>
       </div>
     );
   }
@@ -74,25 +82,30 @@ function ProductDetails() {
             )}
             
             <div className="product-price-section">
-              <span className="product-price">${Number(product.price).toFixed(2)}</span>
+              <span className="product-price">₺{Number(product.price).toFixed(2)}</span>
               {product.stock !== undefined && (
                 <span className={`product-stock ${product.stock > 0 ? 'in-stock' : 'out-of-stock'}`}>
-                  {product.stock > 0 ? 'In Stock' : 'Out of Stock'}
+                  {product.stock > 0 ? 'Stokta Var' : 'Stokta Yok'}
                 </span>
               )}
             </div>
             
             <button
-              className={`add-to-cart-button ${isAddingToCart ? 'adding' : ''}`}
+              className={`premium-btn premium-btn-secondary ${isAddingToCart ? 'adding' : ''}`}
               onClick={handleAddToCart}
               disabled={isAddingToCart || (product.stock !== undefined && product.stock === 0)}
             >
-              {isAddingToCart ? 'Adding...' : 'Add to Cart'}
+              <span className="premium-btn-content">
+                <span className="premium-btn-icon">🍃</span>
+                <span className="premium-btn-text">
+                  {isAddingToCart ? 'Ekleniyor...' : 'Sepete Ekle'}
+                </span>
+              </span>
             </button>
             
             {product.stock !== undefined && product.stock > 0 && (
               <div className="product-stock-info">
-                {product.stock} item{product.stock !== 1 ? 's' : ''} available
+                {product.stock} adet stokta mevcut
               </div>
             )}
           </div>

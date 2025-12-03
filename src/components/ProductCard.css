@@ -3,58 +3,80 @@
 }
 
 .product-card {
-  border: 1px solid var(--border-color);
-  border-radius: 12px;
-  padding: 12px;
-  background: var(--card-bg);
-  box-shadow: 0 2px 8px var(--shadow);
+  border: 2px solid rgba(79, 111, 82, 0.25);
+  border-radius: 16px;
+  padding: 8px;
+  background: linear-gradient(180deg, #FFFFFF 0%, #F1F8F4 100%);
+  box-shadow: 0 4px 16px rgba(79, 111, 82, 0.15), inset 0 1px 0 rgba(79, 111, 82, 0.05);
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 8px;
+  overflow: hidden;
 }
 
 .product-card:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 8px 24px var(--shadow-hover);
-  border-color: var(--border-hover);
+  transform: translateY(-6px);
+  box-shadow: 0 12px 32px rgba(79, 111, 82, 0.3), 0 4px 16px rgba(111, 175, 122, 0.25), inset 0 1px 0 rgba(79, 111, 82, 0.1);
+  border-color: rgba(79, 111, 82, 0.5);
+  background: linear-gradient(180deg, #FFFFFF 0%, #E8F5E9 100%);
 }
 
 /* Hovered state */
 .product-card.hovered {
-  transform: translateY(-6px) scale(1.02);
-  box-shadow: 0 12px 28px var(--shadow-hover);
-  border-color: var(--primary-light);
+  transform: translateY(-8px) scale(1.02);
+  box-shadow: 0 16px 40px rgba(79, 111, 82, 0.3), 0 6px 20px rgba(111, 175, 122, 0.25);
+  border-color: rgba(102, 187, 106, 0.5);
 }
 
 /* Image container */
 .product-img-wrapper {
   width: 100%;
-  aspect-ratio: 4 / 3;
-  background: var(--background);
-  border-radius: 8px;
+  aspect-ratio: 1 / 1;
+  background: linear-gradient(135deg, #F1F8F4 0%, #E8F5E9 50%, #C8E6C9 100%);
+  border-radius: 12px;
   display: flex;
   align-items: center;
   justify-content: center;
   overflow: hidden;
-  transition: transform 0.3s ease;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+  box-shadow: 0 4px 16px rgba(79, 111, 82, 0.2), inset 0 1px 0 rgba(79, 111, 82, 0.08);
+  margin-bottom: 4px;
+  border: 2px solid rgba(79, 111, 82, 0.2);
 }
 
 .product-card:hover .product-img-wrapper {
-  transform: scale(1.02);
+  transform: scale(1.05);
+  box-shadow: 0 8px 20px rgba(79, 111, 82, 0.25), 0 4px 12px rgba(111, 175, 122, 0.2);
+  border-radius: 14px;
+  border-color: rgba(111, 175, 122, 0.3);
+}
+
+.product-card.hovered .product-img-wrapper {
+  transform: scale(1.08);
+  box-shadow: 0 12px 28px rgba(79, 111, 82, 0.3), 0 6px 16px rgba(111, 175, 122, 0.25);
+  border-color: rgba(102, 187, 106, 0.4);
 }
 
 /* Image */
 .product-img {
-  max-width: 100%;
-  max-height: 100%;
-  object-fit: contain;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
   display: block;
-  transition: transform 0.3s ease;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  filter: brightness(1) saturate(1);
 }
 
 .product-card:hover .product-img {
-  transform: scale(1.05);
+  transform: scale(1.1);
+  filter: brightness(1.05) saturate(1.1);
+}
+
+.product-card.hovered .product-img {
+  transform: scale(1.15);
+  filter: brightness(1.1) saturate(1.15);
 }
 
 /* Title */
@@ -73,48 +95,897 @@
   color: var(--primary);
 }
 
-/* Description */
-.product-description {
-  font-size: var(--font-size-base);
-  font-weight: var(--font-weight-normal);
+/* Product Name */
+.product-name {
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-semibold);
   font-family: var(--font-family);
   color: var(--text-dark);
   letter-spacing: var(--letter-spacing-normal);
-  line-height: var(--line-height-normal);
-  margin: 8px 0 4px;
+  line-height: var(--line-height-tight);
+  margin: 4px 0 2px;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  min-height: 2.2em;
+  padding: 0 4px;
+}
+
+@media (max-width: 768px) {
+  .product-name {
+    padding: 0 4px;
+    margin: 4px 0 2px;
+  }
+}
+
+.product-card:hover .product-name {
+  color: #4F6F52;
+  background: linear-gradient(135deg, #4F6F52 0%, #66BB6A 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* Price Container - Mobile layout */
+.price-journey-container {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 8px;
+  margin: 2px 0;
+  padding: 0 4px;
+  min-height: 24px;
+}
+
+@media (max-width: 768px) {
+  .price-journey-container {
+    align-items: center;
+    margin: 2px 0;
+    padding: 0 4px;
+  }
 }
 
 /* Price */
 .product-price {
   margin: 0;
-  font-size: var(--font-size-base);
-  font-weight: var(--font-weight-semibold);
+  font-size: var(--font-size-lg);
+  font-weight: var(--font-weight-bold);
   font-family: var(--font-family);
-  color: var(--primary);
+  background: linear-gradient(135deg, #4F6F52 0%, #66BB6A 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
   letter-spacing: var(--letter-spacing-normal);
   line-height: var(--line-height-normal);
+  flex: 1;
+  display: flex;
+  align-items: center;
 }
 
-/* Card Button */
-.product-card button {
+/* Desktop: Hide mobile journey badge completely, show normal layout */
+@media (min-width: 769px) {
+  .journey-badge-mobile {
+    display: none !important;
+    flex-direction: row !important; /* Override column if somehow visible */
+  }
+  
+  .journey-line-1,
+  .journey-line-2 {
+    display: none !important;
+  }
+  
+  .price-journey-container {
+    display: block;
+    align-items: baseline !important;
+  }
+  
+  .product-price {
+    padding: 0 4px;
+  }
+}
+
+/* Journey Badge Mobile - Only visible on mobile, positioned next to price */
+.journey-badge-mobile {
+  display: none;
+}
+
+@media (max-width: 768px) {
+  /* Hide journey badge on image in mobile */
+  .product-img-wrapper .journey-badge {
+    display: none;
+  }
+  
+  /* Show journey badge mobile next to price - Animated link style */
+  .journey-badge-mobile {
+    display: inline-flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 0;
+    padding: 6px 10px;
+    background: transparent;
+    border: none;
+    border-radius: 0;
+    cursor: pointer;
+    color: #4F6F52;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    flex-shrink: 0;
+    font-weight: 500;
+    font-size: 11px;
+    font-family: 'Inter', 'Poppins', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    text-decoration: none;
+    letter-spacing: 0.1px;
+    line-height: 1.2;
+    position: relative;
+    align-self: flex-start;
+    min-width: fit-content;
+    box-shadow: none;
+    /* Sürekli animasyonlar */
+    animation: journeyFloat 3s ease-in-out infinite;
+  }
+  
+  /* Altta ince çizgi efekti */
+  .journey-badge-mobile::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 60%;
+    height: 1px;
+    background: linear-gradient(90deg, transparent 0%, rgba(79, 111, 82, 0.2) 50%, transparent 100%);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    animation: underlinePulse 2s ease-in-out infinite;
+  }
+  
+  /* Alt çizgi pulse animasyonu */
+  @keyframes underlinePulse {
+    0%, 100% {
+      opacity: 0.3;
+      width: 60%;
+    }
+    50% {
+      opacity: 0.6;
+      width: 80%;
+    }
+  }
+  
+  /* Float animasyonu - Yukarı aşağı hareket */
+  @keyframes journeyFloat {
+    0%, 100% {
+      transform: translateY(0);
+    }
+    50% {
+      transform: translateY(-3px);
+    }
+  }
+  
+  
+  .journey-line-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0;
+  }
+  
+  .journey-line-1 {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    line-height: 1.2;
+  }
+  
+  .journey-line-2 {
+    display: block;
+    line-height: 1.2;
+    padding-left: 18px; /* Icon genişliği + gap kadar */
+  }
+  
+  .journey-icon-mobile {
+    font-size: 13px;
+    display: inline-flex;
+    align-items: center;
+    line-height: 1;
+    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    /* Sürekli ikon animasyonu */
+    animation: iconSway 2.5s ease-in-out infinite;
+  }
+  
+  /* İkon sallanma animasyonu */
+  @keyframes iconSway {
+    0%, 100% {
+      transform: rotate(0deg) scale(1);
+    }
+    25% {
+      transform: rotate(-8deg) scale(1.05);
+    }
+    75% {
+      transform: rotate(8deg) scale(1.05);
+    }
+  }
+  
+  .journey-text-mobile {
+    font-size: 11px;
+    font-weight: 500;
+    color: #4F6F52;
+    letter-spacing: 0.1px;
+    transition: color 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+  
+  /* Hover ve active durumlarında animasyonları hızlandır */
+  .journey-badge-mobile:active,
+  .journey-badge-mobile:hover {
+    color: #66BB6A;
+    background: rgba(102, 187, 106, 0.05);
+    animation: journeyFloat 1.5s ease-in-out infinite;
+  }
+  
+  .journey-badge-mobile:hover::after {
+    opacity: 0.8;
+    width: 90%;
+    background: linear-gradient(90deg, transparent 0%, rgba(102, 187, 106, 0.4) 50%, transparent 100%);
+  }
+  
+  .journey-badge-mobile:active {
+    transform: translateY(0) scale(0.98);
+    box-shadow: 0 1px 3px rgba(79, 111, 82, 0.15);
+  }
+  
+  .journey-badge-mobile:hover .journey-icon-mobile {
+    animation: iconSway 1.5s ease-in-out infinite, iconMove 1s ease-in-out infinite;
+  }
+  
+  /* Hover'da ikon ekstra hareket */
+  @keyframes iconMove {
+    0%, 100% {
+      transform: translateX(0);
+    }
+    50% {
+      transform: translateX(3px);
+    }
+  }
+  
+  .journey-badge-mobile:hover .journey-text-mobile,
+  .journey-badge-mobile:hover .journey-line-2 {
+    color: #66BB6A;
+  }
+  
+  /* Metin için hafif glow efekti */
+  .journey-text-mobile,
+  .journey-line-2 {
+    animation: textGlow 3s ease-in-out infinite;
+  }
+  
+  @keyframes textGlow {
+    0%, 100% {
+      opacity: 1;
+    }
+    50% {
+      opacity: 0.85;
+    }
+  }
+  
+  .price-journey-container {
+    margin: 4px 0;
+    padding: 0 4px;
+    align-items: flex-start;
+  }
+}
+
+@media (max-width: 480px) {
+  .journey-badge-mobile {
+    font-size: 10px;
+    padding: 5px 8px;
+    border-radius: 6px;
+  }
+  
+  .journey-line-1 {
+    gap: 3px;
+  }
+  
+  .journey-line-2 {
+    padding-left: 16px;
+  }
+  
+  .journey-icon-mobile {
+    font-size: 12px;
+  }
+  
+  .journey-text-mobile {
+    font-size: 10px;
+  }
+  
+  .price-journey-container {
+    gap: 6px;
+  }
+}
+
+@media (max-width: 360px) {
+  .journey-badge-mobile {
+    font-size: 9px;
+    padding: 4px 6px;
+    border-radius: 6px;
+  }
+  
+  .journey-line-1 {
+    gap: 2px;
+  }
+  
+  .journey-line-2 {
+    padding-left: 14px;
+  }
+  
+  .journey-icon-mobile {
+    font-size: 11px;
+  }
+  
+  .journey-text-mobile {
+    font-size: 9px;
+  }
+  
+  .price-journey-container {
+    gap: 4px;
+  }
+}
+
+/* Premium Add to Cart Button */
+.premium-add-btn {
+  position: relative;
+  margin-top: 8px;
+  padding: 0;
+  background: linear-gradient(135deg, #FFFFFF 0%, #F1F8F4 100%);
+  color: #2F4A2F;
+  border: 2px solid rgba(79, 111, 82, 0.25);
+  border-radius: 24px;
+  font-size: 14px;
+  font-weight: 500;
+  font-family: 'Inter', 'Poppins', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  letter-spacing: 0.3px;
+  cursor: pointer;
+  transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 4px 12px rgba(79, 111, 82, 0.15);
+  overflow: hidden;
+  min-height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.premium-add-btn::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, rgba(79, 111, 82, 0.08) 0%, rgba(111, 175, 122, 0.12) 100%);
+  opacity: 0;
+  transition: opacity 0.35s ease;
+  border-radius: 24px;
+}
+
+.premium-add-btn:hover {
+  background: linear-gradient(135deg, #E8F5E9 0%, #C8E6C9 100%);
+  border-color: rgba(111, 175, 122, 0.4);
+  transform: scale(1.02);
+  box-shadow: 0 6px 24px rgba(79, 111, 82, 0.25), 0 2px 8px rgba(111, 175, 122, 0.2);
+}
+
+.premium-add-btn:hover::before {
+  opacity: 1;
+}
+
+.premium-add-btn:active {
+  transform: scale(0.98);
+}
+
+.premium-add-btn.adding {
+  animation: buttonBounce 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+}
+
+.btn-content {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 12px 24px;
+  transition: all 0.3s ease;
+}
+
+.btn-icon {
+  font-size: 16px;
+  display: inline-block;
+  transition: transform 0.3s ease;
+  filter: drop-shadow(0 1px 2px rgba(46, 92, 55, 0.2));
+}
+
+.premium-add-btn:hover .btn-icon {
+  transform: rotate(-12deg) scale(1.1);
+  animation: leafFloat 2s ease-in-out infinite;
+}
+
+.btn-text {
+  font-weight: 500;
+  color: #2e5c37;
+  transition: color 0.3s ease;
+}
+
+.premium-add-btn:hover .btn-text {
+  color: #3a7a44;
+}
+
+/* Leaf Burst Animation */
+.leaf-burst {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 3;
+}
+
+.leaf {
+  position: absolute;
+  font-size: 18px;
+  opacity: 0;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.premium-add-btn.adding .leaf-1 {
+  animation: leafBurst1 0.6s ease-out forwards;
+}
+
+.premium-add-btn.adding .leaf-2 {
+  animation: leafBurst2 0.6s ease-out forwards;
+}
+
+.premium-add-btn.adding .leaf-3 {
+  animation: leafBurst3 0.6s ease-out forwards;
+}
+
+@keyframes buttonBounce {
+  0% { transform: scale(0.95); }
+  50% { transform: scale(1.03); }
+  100% { transform: scale(1); }
+}
+
+@keyframes leafFloat {
+  0%, 100% { transform: rotate(-12deg) translateY(0) scale(1.1); }
+  50% { transform: rotate(-8deg) translateY(-2px) scale(1.15); }
+}
+
+@keyframes leafBurst1 {
+  0% {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(0.8) rotate(0deg);
+  }
+  100% {
+    opacity: 0;
+    transform: translate(-50%, -50%) translate(-30px, -40px) scale(1.2) rotate(180deg);
+  }
+}
+
+@keyframes leafBurst2 {
+  0% {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(0.8) rotate(0deg);
+  }
+  100% {
+    opacity: 0;
+    transform: translate(-50%, -50%) translate(0, -50px) scale(1.3) rotate(220deg);
+  }
+}
+
+@keyframes leafBurst3 {
+  0% {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(0.8) rotate(0deg);
+  }
+  100% {
+    opacity: 0;
+    transform: translate(-50%, -50%) translate(30px, -40px) scale(1.2) rotate(-180deg);
+  }
+}
+
+.premium-add-btn:focus-visible {
+  outline: 2px solid #3a7a44;
+  outline-offset: 2px;
+}
+
+/* Legacy button styles for compatibility */
+.product-card button:not(.premium-add-btn) {
   margin-top: 4px;
-  padding: 0.625rem 1rem;
+  padding: 0.75rem 1rem;
   background: var(--primary);
   color: var(--card-bg);
   border: none;
-  border-radius: 8px;
+  border-radius: 10px;
   font-size: var(--font-size-sm);
-  font-weight: var(--font-weight-medium);
+  font-weight: var(--font-weight-semibold);
   font-family: var(--font-family);
   letter-spacing: var(--letter-spacing-normal);
   text-transform: none;
   cursor: pointer;
   transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 2px 6px rgba(74, 124, 89, 0.2);
 }
 
-.product-card button:hover {
+.product-card button:not(.premium-add-btn):hover {
   background: var(--primary-hover);
-  transform: translateY(-1px);
-  box-shadow: 0 2px 8px rgba(74, 124, 89, 0.25);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(74, 124, 89, 0.3);
+}
+
+/* Mobile optimizations - Ultra Responsive */
+@media (max-width: 640px) {
+  .product-card-wrapper {
+    width: 100%;
+    min-width: 0;
+    max-width: 100%;
+    box-sizing: border-box;
+  }
+
+  .product-card {
+    padding: 6px;
+    border-radius: 12px;
+    gap: 6px;
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
+    overflow: hidden;
+  }
+
+  .product-img-wrapper {
+    border-radius: 10px;
+    margin-bottom: 4px;
+    width: 100%;
+    max-width: 100%;
+    aspect-ratio: 1 / 1;
+    box-sizing: border-box;
+    overflow: hidden;
+  }
+
+  .product-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    max-width: 100%;
+  }
+
+  .product-name {
+    font-size: 11px;
+    margin: 4px 0 2px;
+    min-height: 2.2em;
+    padding: 0 2px;
+    line-height: 1.3;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+  }
+
+  .price-journey-container {
+    padding: 0 2px;
+    gap: 6px;
+    margin: 2px 0;
+    align-items: flex-start;
+  }
+  
+  .product-price {
+    font-size: 13px;
+    padding: 0;
+    font-weight: 600;
+    line-height: 1.4;
+  }
+
+  .product-card button:not(.premium-add-btn) {
+    padding: 0.5rem 0.75rem;
+    font-size: 11px;
+    border-radius: 8px;
+    margin-top: 2px;
+  }
+
+  .premium-add-btn {
+    min-height: 34px;
+    border-radius: 17px;
+    margin-top: 4px;
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
+  }
+
+  .btn-content {
+    padding: 7px 10px;
+    gap: 4px;
+  }
+
+  .btn-icon {
+    font-size: 11px;
+  }
+
+  .btn-text {
+    font-size: 10px;
+    white-space: nowrap;
+  }
+
+  .journey-badge {
+    bottom: 8px;
+    font-size: 9px;
+    padding: 4px 10px;
+    border-radius: 14px;
+  }
+}
+
+@media (max-width: 480px) {
+  .product-card-wrapper {
+    width: 100%;
+    max-width: 100%;
+  }
+
+  .product-card {
+    padding: 4px;
+    border-radius: 10px;
+    gap: 4px;
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
+  }
+
+  .product-img-wrapper {
+    border-radius: 8px;
+    margin-bottom: 3px;
+    width: 100%;
+    max-width: 100%;
+  }
+
+  .product-name {
+    font-size: 10px;
+    margin: 3px 0 2px;
+    min-height: 2em;
+    padding: 0 2px;
+    line-height: 1.25;
+  }
+
+  .price-journey-container {
+    padding: 0 2px;
+    gap: 4px;
+    margin: 2px 0;
+    align-items: flex-start;
+  }
+  
+  .product-price {
+    font-size: 12px;
+    padding: 0;
+    line-height: 1.4;
+  }
+
+  .premium-add-btn {
+    min-height: 30px;
+    border-radius: 15px;
+    margin-top: 3px;
+    width: 100%;
+    max-width: 100%;
+  }
+
+  .btn-content {
+    padding: 5px 8px;
+    gap: 3px;
+  }
+
+  .btn-icon {
+    font-size: 10px;
+  }
+
+  .btn-text {
+    font-size: 9px;
+  }
+
+  .journey-badge {
+    bottom: 6px;
+    font-size: 8px;
+    padding: 3px 8px;
+    border-radius: 12px;
+  }
+}
+
+@media (max-width: 360px) {
+  .product-card-wrapper {
+    width: 100%;
+    max-width: 100%;
+  }
+
+  .product-card {
+    padding: 3px;
+    gap: 3px;
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
+  }
+
+  .product-img-wrapper {
+    width: 100%;
+    max-width: 100%;
+  }
+
+  .product-name {
+    font-size: 9px;
+    min-height: 1.8em;
+    padding: 0 1px;
+    margin: 3px 0 2px;
+  }
+
+  .price-journey-container {
+    padding: 0 1px;
+    gap: 3px;
+    margin: 2px 0;
+    align-items: flex-start;
+  }
+  
+  .product-price {
+    font-size: 11px;
+    padding: 0;
+    line-height: 1.4;
+  }
+
+  .premium-add-btn {
+    min-height: 28px;
+    border-radius: 14px;
+    width: 100%;
+    max-width: 100%;
+  }
+
+  .btn-content {
+    padding: 4px 6px;
+    gap: 2px;
+  }
+
+  .btn-icon {
+    font-size: 9px;
+  }
+
+  .btn-text {
+    font-size: 8px;
+  }
+
+  .journey-badge {
+    bottom: 5px;
+    font-size: 7px;
+    padding: 3px 6px;
+    border-radius: 10px;
+  }
+}
+
+@media (max-width: 320px) {
+  .product-card {
+    padding: 2px;
+    gap: 2px;
+  }
+
+  .product-name {
+    font-size: 8px;
+    min-height: 1.6em;
+    padding: 0 1px;
+    margin: 2px 0 1px;
+  }
+
+  .price-journey-container {
+    padding: 0 1px;
+    gap: 2px;
+    margin: 1px 0;
+    align-items: flex-start;
+  }
+  
+  .journey-badge-mobile {
+    padding: 3px 5px;
+    font-size: 8px;
+    border-radius: 5px;
+  }
+  
+  .journey-line-2 {
+    padding-left: 13px;
+  }
+  
+  .product-price {
+    font-size: 10px;
+    padding: 0;
+    line-height: 1.4;
+  }
+  
+  .product-price {
+    font-size: 10px;
+    padding: 0;
+  }
+
+  .premium-add-btn {
+    min-height: 26px;
+    border-radius: 13px;
+  }
+
+  .btn-content {
+    padding: 3px 5px;
+  }
+
+  .btn-text {
+    font-size: 7px;
+  }
 }
   
+
+/* Journey Badge - Hidden by default, shows on hover */
+.journey-badge {
+  position: absolute;
+  bottom: 12px;
+  left: 50%;
+  transform: translateX(-50%) translateY(10px);
+  opacity: 0;
+  pointer-events: none;
+  transition: all 0.35s ease;
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.95) 0%, rgba(232, 245, 233, 0.9) 100%);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  border-radius: 20px;
+  padding: 6px 14px;
+  font-weight: 600;
+  box-shadow: 0 4px 12px rgba(79, 111, 82, 0.25);
+  cursor: pointer;
+  color: #4F6F52;
+  font-size: 12px;
+  z-index: 4;
+  text-align: center;
+  white-space: nowrap;
+  border: 1px solid rgba(79, 111, 82, 0.2);
+  font-family: var(--font-family, 'Inter', 'Poppins', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif);
+}
+
+/* Show badge on product card hover */
+.product-card:hover .journey-badge,
+.product-img-wrapper:hover .journey-badge {
+  opacity: 1;
+  transform: translateX(-50%) translateY(0);
+  pointer-events: auto;
+}
+
+/* Badge hover effect */
+.journey-badge:hover {
+  transform: translateX(-50%) translateY(0) scale(1.05);
+  background: linear-gradient(135deg, #FFFFFF 0%, #E8F5E9 100%);
+  box-shadow: 0 6px 16px rgba(79, 111, 82, 0.35);
+  border-color: rgba(111, 175, 122, 0.4);
+  color: #66BB6A;
+}
+/* Responsive Journey Badge - Same hover behavior on all devices */
+@media (max-width: 640px) {
+  .journey-badge {
+    bottom: 8px;
+    font-size: 10px;
+    padding: 5px 12px;
+    border-radius: 16px;
+  }
+}
+
+@media (max-width: 480px) {
+  .journey-badge {
+    bottom: 6px;
+    font-size: 9px;
+    padding: 4px 10px;
+    border-radius: 14px;
+  }
+}
+
+@media (max-width: 360px) {
+  .journey-badge {
+    bottom: 5px;
+    font-size: 8px;
+    padding: 3px 8px;
+    border-radius: 12px;
+  }
+}
+

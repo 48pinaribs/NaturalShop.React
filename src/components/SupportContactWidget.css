@@ -1,0 +1,290 @@
+/* Support Contact Widget - Minimal & Elegant Design */
+
+/* Floating Button */
+.support-widget-button {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background: #4F6F52;
+  color: #ffffff;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 12px rgba(79, 111, 82, 0.25);
+  z-index: 9999;
+  transition: all 0.2s ease;
+  padding: 0;
+}
+
+.support-widget-button:hover {
+  background: #5A7F5D;
+  box-shadow: 0 6px 16px rgba(79, 111, 82, 0.3);
+  transform: translateY(-2px);
+}
+
+.support-widget-button.active {
+  background: #2F4A2F;
+}
+
+.widget-icon {
+  width: 24px;
+  height: 24px;
+  stroke-width: 2;
+}
+
+/* Minimal Chat Panel */
+.support-widget-panel {
+  position: fixed;
+  bottom: 92px;
+  right: 24px;
+  width: 260px;
+  max-width: calc(100vw - 48px);
+  background: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
+  padding: 14px 16px;
+  z-index: 9998;
+  animation: slideUpFade 0.25s ease-out;
+  border: 1px solid rgba(79, 111, 82, 0.12);
+}
+
+@keyframes slideUpFade {
+  from {
+    opacity: 0;
+    transform: translateY(10px) scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+/* Close Button */
+.support-widget-close {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #6B6A68;
+  transition: all 0.2s ease;
+  padding: 0;
+}
+
+.support-widget-close:hover {
+  background: rgba(79, 111, 82, 0.08);
+  color: #4F6F52;
+}
+
+.close-icon {
+  width: 14px;
+  height: 14px;
+  stroke-width: 2.5;
+}
+
+/* Minimal Content */
+.support-widget-content {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding-right: 20px;
+}
+
+.support-widget-message {
+  font-size: 13px;
+  font-weight: 500;
+  color: #2F4A2F;
+  margin: 0;
+  line-height: 1.5;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  word-wrap: break-word;
+}
+
+.support-buttons-wrapper {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+}
+
+.support-btn-minimal {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  padding: 8px 14px;
+  border-radius: 8px;
+  font-size: 12px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  border: none;
+  color: #ffffff;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  flex: 1;
+  min-width: 80px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+}
+
+.whatsapp-btn {
+  background: #25D366;
+  box-shadow: 0 2px 6px rgba(37, 211, 102, 0.2);
+}
+
+.whatsapp-btn:hover {
+  background: #128C7E;
+  box-shadow: 0 3px 8px rgba(37, 211, 102, 0.3);
+  transform: translateY(-1px);
+}
+
+.phone-btn {
+  background: #4F6F52;
+  box-shadow: 0 2px 6px rgba(79, 111, 82, 0.2);
+}
+
+.phone-btn:hover {
+  background: #5A7F5D;
+  box-shadow: 0 3px 8px rgba(79, 111, 82, 0.3);
+  transform: translateY(-1px);
+}
+
+.btn-icon-minimal {
+  width: 16px;
+  height: 16px;
+}
+
+/* Responsive */
+@media (max-width: 600px) {
+  .support-widget-button {
+    bottom: 20px;
+    right: 20px;
+    width: 52px;
+    height: 52px;
+  }
+
+  .widget-icon {
+    width: 22px;
+    height: 22px;
+  }
+
+  .support-widget-panel {
+    bottom: 84px;
+    right: 20px;
+    width: 200px;
+    max-width: calc(100vw - 40px);
+    padding: 12px 14px;
+  }
+
+  .support-widget-message {
+    font-size: 12px;
+  }
+
+  .support-buttons-wrapper {
+    gap: 6px;
+  }
+
+  .support-btn-minimal {
+    padding: 7px 12px;
+    font-size: 11px;
+    min-width: 70px;
+  }
+
+  .btn-icon-minimal {
+    width: 14px;
+    height: 14px;
+  }
+}
+
+@media (max-width: 480px) {
+  .support-widget-button {
+    bottom: 16px;
+    right: 16px;
+    width: 48px;
+    height: 48px;
+  }
+
+  .widget-icon {
+    width: 20px;
+    height: 20px;
+  }
+
+  .support-widget-panel {
+    bottom: 76px;
+    right: 16px;
+    width: 160px;
+    max-width: calc(100vw - 32px);
+    padding: 10px 12px;
+    border-radius: 10px;
+  }
+
+  .support-widget-content {
+    padding-right: 18px;
+    gap: 8px;
+  }
+
+  .support-widget-message {
+    font-size: 11px;
+  }
+
+  .support-buttons-wrapper {
+    flex-direction: column;
+    gap: 6px;
+  }
+
+  .support-btn-minimal {
+    padding: 6px 10px;
+    font-size: 10px;
+    width: 100%;
+    min-width: unset;
+  }
+
+  .btn-icon-minimal {
+    width: 13px;
+    height: 13px;
+  }
+
+  .support-widget-close {
+    top: 6px;
+    right: 6px;
+    width: 18px;
+    height: 18px;
+  }
+
+  .close-icon {
+    width: 12px;
+    height: 12px;
+  }
+}
+
+/* Accessibility */
+.support-widget-button:focus-visible,
+.support-btn-minimal:focus-visible,
+.support-widget-close:focus-visible {
+  outline: 2px solid #4F6F52;
+  outline-offset: 2px;
+}
+
+/* Reduced Motion */
+@media (prefers-reduced-motion: reduce) {
+  .support-widget-panel {
+    animation: none;
+  }
+
+  .support-widget-button,
+  .support-btn-minimal,
+  .support-widget-close {
+    transition: none;
+  }
+}

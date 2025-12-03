@@ -1,8 +1,17 @@
+import { useEffect } from "react";
 import { Link } from "react-router-dom";
 import { FiCheckCircle, FiHome, FiPackage } from "react-icons/fi";
+import { useCart } from "../context/CartContext";
 import "./OrderSuccess.css";
 
 function OrderSuccess() {
+  const { clearCart } = useCart();
+
+  // Sipariş başarılı olduğunda sepeti temizle
+  useEffect(() => {
+    clearCart();
+  }, [clearCart]);
+
   return (
     <main className="order-success-container">
       <div className="order-success-content">
