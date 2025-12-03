@@ -85,8 +85,7 @@
   font-size: var(--font-size-sm);
   font-weight: var(--font-weight-semibold);
   font-family: var(--font-family);
-  text-transform: uppercase;
-  letter-spacing: 0.04em;
+  letter-spacing: var(--letter-spacing-normal);
   width: fit-content;
   box-shadow: 0 2px 8px var(--shadow);
 }
@@ -135,6 +134,7 @@
   font-weight: var(--font-weight-semibold);
   font-family: var(--font-family);
   letter-spacing: var(--letter-spacing-normal);
+  line-height: var(--line-height-normal);
 }
 
 .product-stock.in-stock {
@@ -153,7 +153,8 @@
   font-family: var(--font-family);
   color: var(--text-light);
   letter-spacing: var(--letter-spacing-normal);
-  margin-top: -0.5rem;
+  line-height: var(--line-height-relaxed);
+  margin-top: 0.25rem;
 }
 
 /* Add to Cart Button */

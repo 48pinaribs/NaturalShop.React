@@ -12,7 +12,7 @@ function ProductsPage() {
 
   return (
     <main className="app-container">
-      <h1 className="products-heading">Products</h1>
+      <h1 className="products-heading">Ürünler</h1>
       <div className="products-grid">
         {products.map(p => (
           <ProductCard key={p.id} {...p} />

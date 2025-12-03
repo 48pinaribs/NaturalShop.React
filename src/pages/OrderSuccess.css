@@ -1,0 +1,220 @@
+/* Order Success Container */
+.order-success-container {
+  min-height: calc(100vh - 200px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem 1.5rem;
+  animation: fadeIn 0.3s ease-out;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.order-success-content {
+  max-width: 560px;
+  width: 100%;
+  text-align: center;
+  background: var(--background);
+  padding: 3rem 2rem;
+  border-radius: 16px;
+  border: 1px solid var(--border-color);
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.07);
+}
+
+/* Success Icon */
+.success-icon-wrapper {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 1.5rem;
+  animation: scaleIn 0.4s ease-out 0.2s both;
+}
+
+@keyframes scaleIn {
+  from {
+    opacity: 0;
+    transform: scale(0.5);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.success-icon {
+  font-size: 5rem;
+  color: var(--primary);
+  background: rgba(74, 124, 89, 0.1);
+  padding: 1.5rem;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 120px;
+  height: 120px;
+  margin: 0 auto;
+  border: 3px solid rgba(74, 124, 89, 0.2);
+}
+
+/* Success Title */
+.success-title {
+  font-size: var(--font-size-3xl);
+  font-weight: var(--font-weight-semibold);
+  color: var(--text-dark);
+  margin-bottom: 1rem;
+  letter-spacing: var(--letter-spacing-tight);
+  line-height: var(--line-height-tight);
+  animation: fadeInUp 0.4s ease-out 0.3s both;
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Success Message */
+.success-message {
+  font-size: var(--font-size-lg);
+  color: var(--text-light);
+  line-height: var(--line-height-relaxed);
+  margin-bottom: 2.5rem;
+  font-weight: var(--font-weight-normal);
+  animation: fadeInUp 0.4s ease-out 0.4s both;
+}
+
+/* Success Actions */
+.success-actions {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  flex-wrap: wrap;
+  animation: fadeInUp 0.4s ease-out 0.5s both;
+}
+
+.success-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.875rem 1.75rem;
+  border-radius: 12px;
+  font-size: var(--font-size-base);
+  font-weight: var(--font-weight-semibold);
+  font-family: var(--font-family);
+  cursor: pointer;
+  transition: all 0.2s ease;
+  text-decoration: none;
+  border: none;
+  letter-spacing: var(--letter-spacing-normal);
+  min-width: 160px;
+}
+
+.success-btn-icon {
+  font-size: 1.125rem;
+  flex-shrink: 0;
+}
+
+/* Primary Button */
+.success-btn-primary {
+  background: var(--primary);
+  color: white;
+  box-shadow: 0 4px 14px rgba(74, 124, 89, 0.25);
+}
+
+.success-btn-primary:hover {
+  background: var(--primary-hover);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(74, 124, 89, 0.35);
+}
+
+.success-btn-primary:active {
+  transform: translateY(0);
+}
+
+/* Outline Button */
+.success-btn-outline {
+  background: transparent;
+  color: var(--text-light);
+  border: 1.5px solid var(--border-color);
+}
+
+.success-btn-outline:hover:not(:disabled) {
+  border-color: var(--primary);
+  color: var(--primary);
+  background: rgba(74, 124, 89, 0.05);
+}
+
+.success-btn-outline:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* Responsive Design */
+@media (max-width: 640px) {
+  .order-success-container {
+    padding: 1.5rem 1rem;
+    min-height: calc(100vh - 180px);
+  }
+
+  .order-success-content {
+    padding: 2.5rem 1.5rem;
+    border-radius: 12px;
+  }
+
+  .success-icon {
+    font-size: 4rem;
+    width: 100px;
+    height: 100px;
+    padding: 1.25rem;
+  }
+
+  .success-title {
+    font-size: var(--font-size-2xl);
+  }
+
+  .success-message {
+    font-size: var(--font-size-base);
+    margin-bottom: 2rem;
+  }
+
+  .success-actions {
+    flex-direction: column;
+  }
+
+  .success-btn {
+    width: 100%;
+    min-width: auto;
+  }
+}
+
+@media (max-width: 480px) {
+  .order-success-content {
+    padding: 2rem 1.25rem;
+  }
+
+  .success-icon {
+    font-size: 3.5rem;
+    width: 90px;
+    height: 90px;
+    padding: 1rem;
+  }
+
+  .success-title {
+    font-size: var(--font-size-xl);
+  }
+}
+
