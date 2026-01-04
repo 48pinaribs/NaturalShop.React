@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import  { useState} from "react";
 import { Link } from "react-router-dom";
 import {
   FiInstagram,
@@ -12,7 +12,6 @@ import {
 import { FaWhatsapp } from "react-icons/fa";
 import { toast } from "react-toastify";
 import logoFull from "../assets/logo.svg";
-import LeafLogo from "./LeafLogo";
 import "./Footer.css";
 
 const Footer = () => {

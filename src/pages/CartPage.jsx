@@ -1,5 +1,5 @@
 import { useCart } from "../context/CartContext";
-import { FiMinus, FiPlus, FiTrash2, FiShoppingBag } from "react-icons/fi"; // icons: minus, plus, trash, shopping bag
+import { FiMinus, FiPlus, FiTrash2} from "react-icons/fi"; // icons: minus, plus, trash, shopping bag
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import "./CartPage.css";

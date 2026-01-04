@@ -12,7 +12,6 @@ import {
   FiRefreshCw,
   FiPackage,
   FiTruck,
-  FiLoader
 } from "react-icons/fi";
 import "./PaymentResultPage.css";
 
@@ -64,7 +63,7 @@ export default function PaymentResultPage() {
         }
       })
       .catch(() => setStatus("error"));
-  }, []);
+  }, [clearCart]);
 
   const handleRetry = () => {
     navigate("/checkout");

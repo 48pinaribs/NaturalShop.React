@@ -1,12 +1,13 @@
-// API Configuration
-// Backend API base URL
-// Development: Backend localhost'ta çalışıyorsa localhost:5072 kullanın
-// Production: Production backend URL'inizi buraya yazın
-const API_BASE_URL = process.env.REACT_APP_API_URL || "http://localhost:5072/api";
-console.log("API_BASE_URL --->", API_BASE_URL);
-export default {
+const API_BASE_URL = process.env.REACT_APP_API_URL;
+
+if (!API_BASE_URL) {
+  throw new Error(
+    "REACT_APP_API_URL is not set. Add it to .env for local and to Vercel Environment Variables for production."
+  );
+}
+console.log("API Base URL:", API_BASE_URL);
+const apiConfig = {
   API_BASE_URL,
-  // API endpoints
   endpoints: {
     auth: {
       login: `${API_BASE_URL}/auth/login`,
@@ -28,3 +29,4 @@ export default {
   },
 };
 
+export default apiConfig;

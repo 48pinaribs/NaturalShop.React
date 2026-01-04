@@ -39,6 +39,7 @@ const ProductJourneyModal = ({
   const [isEnd, setIsEnd] = useState(false);
   
   console.log("open", open);
+  console.log("steps", steps);
   // Debug: Modal açıldığında adımları kontrol et
   useEffect(() => {
     if (open) {

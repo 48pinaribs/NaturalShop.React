@@ -5,7 +5,6 @@ import Header from "./components/Header";
 import Footer from "./components/Footer";
 import { CartProvider } from "./context/CartContext";
 import "./App.css";
-import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import CartPage from "./pages/CartPage";
 import CheckoutPage from "./pages/CheckoutPage";
@@ -19,6 +18,7 @@ import PhoneLogin from "./pages/PhoneLogin";
 import About from "./pages/About";
 import SupportContactWidget from "./components/SupportContactWidget";
 import ScrollToTop from "./components/ScrollToTop";
+import { ToastContainer } from "react-toastify";
 
 function App() {
   return (

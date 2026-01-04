@@ -4,7 +4,6 @@ import { useNavigate, Link } from "react-router-dom";
 import { useState } from "react";
 import axios from "axios";
 import { 
-  FiCheckCircle, 
   FiUser, 
   FiPhone, 
   FiHome, 
@@ -16,7 +15,7 @@ import "./CheckoutPage.css";
 import apiConfig from "../config/api.js";
 
 function CheckoutPage() {
-  const { cartItems, cartTotal, clearCart } = useCart();
+  const { cartItems, cartTotal } = useCart();
   const navigate = useNavigate();
   const [isProcessing, setIsProcessing] = useState(false);
 

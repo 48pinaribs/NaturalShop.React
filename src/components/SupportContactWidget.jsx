@@ -1,7 +1,22 @@
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef,useCallback} from "react";
 import { FiX, FiPhone, FiMessageCircle } from "react-icons/fi";
 import { FaWhatsapp } from "react-icons/fa";
 import "./SupportContactWidget.css";
+
+
+const messages = [
+  "Merak ettiklerin mi var? 🌿",
+  "Ürünlerimiz hakkında soru sorabilirsin",
+  "Size nasıl yardımcı olabiliriz?",
+  "Zeytinyağı, bal, pekmez veya diğer doğal ürünlerimiz hakkında bilgi almak ister misin?",
+  "Dalaman'dan sofralarınıza gelen doğal ürünlerimiz hakkında merak ettiklerin mi var?",
+  "Size yardımcı olmaktan mutluluk duyarız",
+  "Ürünlerimizle ilgili soruların mı var?",
+  "Köy yumurtası, peynir, kuru meyve veya şifalı bitkiler hakkında soru sorabilirsin",
+  "Geleneksel yöntemlerle üretilen ürünlerimiz hakkında bilgi almak ister misin?",
+  "Doğal ve organik ürünlerimiz için bize ulaşabilirsin"
+];
+
 
 function SupportContactWidget() {
   const [isOpen, setIsOpen] = useState(false);
@@ -17,21 +32,7 @@ function SupportContactWidget() {
   // Örnek: 905551234567
   const phoneNumber = "905439434472";
 
-  // Ürünlere özel samimi mesaj varyasyonları
-  const messages = [
-    "Merak ettiklerin mi var? 🌿",
-    "Ürünlerimiz hakkında soru sorabilirsin",
-    "Size nasıl yardımcı olabiliriz?",
-    "Zeytinyağı, bal, pekmez veya diğer doğal ürünlerimiz hakkında bilgi almak ister misin?",
-    "Dalaman'dan sofralarınıza gelen doğal ürünlerimiz hakkında merak ettiklerin mi var?",
-    "Size yardımcı olmaktan mutluluk duyarız",
-    "Ürünlerimizle ilgili soruların mı var?",
-    "Köy yumurtası, peynir, kuru meyve veya şifalı bitkiler hakkında soru sorabilirsin",
-    "Geleneksel yöntemlerle üretilen ürünlerimiz hakkında bilgi almak ister misin?",
-    "Doğal ve organik ürünlerimiz için bize ulaşabilirsin"
-  ];
-
-  const autoOpenPanel = () => {
+  const autoOpenPanel = useCallback(() => {
     // Eğer zaten açıksa açma
     if (isOpen) return;
     
@@ -47,7 +48,7 @@ function SupportContactWidget() {
     autoCloseTimerRef.current = setTimeout(() => {
       setIsOpen(false);
     }, 8000);
-  };
+  }, [isOpen]);
 
   // Periyodik olarak açılma (daha sık - 25-40 saniye aralıklarla)
   useEffect(() => {
@@ -79,7 +80,7 @@ function SupportContactWidget() {
       }
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [autoOpenPanel]);
 
   // Scroll bazlı açılma - kullanıcı sayfada gezinirken
   useEffect(() => {

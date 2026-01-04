@@ -9,9 +9,6 @@ import {
   FiArrowLeft,
   FiCalendar,
   FiCreditCard,
-  FiMapPin,
-  FiPhone,
-  FiMail
 } from "react-icons/fi";
 import apiConfig from "../config/api.js";
 import "./OrderDetailsPage.css";
