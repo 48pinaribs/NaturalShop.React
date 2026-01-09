@@ -18,6 +18,7 @@ function ProductsPage({ category: categoryProp }) {
         setError(null);
         console.log("Fetching from:", apiConfig.endpoints.products.list);
         const res = await fetch(apiConfig.endpoints.products.list);
+        console.log("Fetch response status:", res);
         
         if (!res.ok) {
           throw new Error(`HTTP error! status: ${res.status}`);
