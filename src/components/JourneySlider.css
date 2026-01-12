@@ -150,10 +150,10 @@
 }
 
 .journey-text {
-  font-size: 28px;
+  font-size: 20px;
   font-family: 'Playfair Display', 'Cormorant Garamond', serif;
   font-weight: 600;
-  color: #ffffff;
+  color: #f3ecec;
   margin: 0;
   text-align: center;
   text-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);

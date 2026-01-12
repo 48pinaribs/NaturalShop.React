@@ -16,7 +16,6 @@
 }
 
 .product-card:hover {
-  transform: translateY(-6px);
   box-shadow: 0 12px 32px rgba(79, 111, 82, 0.3), 0 4px 16px rgba(111, 175, 122, 0.25), inset 0 1px 0 rgba(79, 111, 82, 0.1);
   border-color: rgba(79, 111, 82, 0.5);
   background: linear-gradient(180deg, #FFFFFF 0%, #E8F5E9 100%);
@@ -24,7 +23,6 @@
 
 /* Hovered state */
 .product-card.hovered {
-  transform: translateY(-8px) scale(1.02);
   box-shadow: 0 16px 40px rgba(79, 111, 82, 0.3), 0 6px 20px rgba(111, 175, 122, 0.25);
   border-color: rgba(102, 187, 106, 0.5);
 }
@@ -43,18 +41,15 @@
   position: relative;
   box-shadow: 0 4px 16px rgba(79, 111, 82, 0.2), inset 0 1px 0 rgba(79, 111, 82, 0.08);
   margin-bottom: 4px;
-  border: 2px solid rgba(79, 111, 82, 0.2);
 }
 
 .product-card:hover .product-img-wrapper {
-  transform: scale(1.05);
   box-shadow: 0 8px 20px rgba(79, 111, 82, 0.25), 0 4px 12px rgba(111, 175, 122, 0.2);
   border-radius: 14px;
   border-color: rgba(111, 175, 122, 0.3);
 }
 
 .product-card.hovered .product-img-wrapper {
-  transform: scale(1.08);
   box-shadow: 0 12px 28px rgba(79, 111, 82, 0.3), 0 6px 16px rgba(111, 175, 122, 0.25);
   border-color: rgba(102, 187, 106, 0.4);
 }

@@ -46,7 +46,7 @@ const ProductJourneyModal = ({
       console.log("🔍 ProductJourneyModal açıldı:", {
         productName,
         stepsCount: steps.length,
-        steps: steps.map((s, i) => ({ index: i, img: s.img, title: s.title }))
+        steps: steps.map((s, i) => ({ index: i, img: s.img, text: s.text }))
       });
       // Resim yollarını kontrol et
       steps.forEach((step, index) => {
@@ -170,17 +170,18 @@ const ProductJourneyModal = ({
         }}
       >
         <Typography
-          variant="h5"
+          variant="h6"
           component="h2"
           sx={{
-            fontWeight: 700,
-            color: theme.palette.text.primary,
+            fontWeight: 400,
+            color: theme.palette.text.secondary,
             flex: 1,
             textAlign: "center",
             px: { xs: 3, sm: 4 },
-            fontSize: { xs: "1.1rem", sm: "1.5rem" },
+            fontSize: { xs: "0.95rem", sm: "1.1rem" },
             wordWrap: "break-word",
             overflowWrap: "break-word",
+            opacity: 0.7,
           }}
         >
           {productName} Yolculuğu
@@ -368,138 +369,109 @@ const ProductJourneyModal = ({
             allowTouchMove={true}
             watchOverflow={true}
           >
-            {steps.map((step, index) => (
-              <SwiperSlide key={index}>
-                <Box
-                  sx={{
-                    display: "flex",
-                    flexDirection: "column",
-                    alignItems: "center",
-                    p: { xs: 1.5, sm: 3 },
-                    pb: { xs: 3, sm: 3 },
-                    minHeight: "fit-content",
-                  }}
-                >
-                  {/* Image Container */}
+            {steps.map((step, index) => {
+              // Her adım için farklı resim gösterildiğini doğrula
+              console.log(`🖼️ Modal - Adım ${index + 1}/${steps.length}:`, step.img);
+              
+              return (
+                <SwiperSlide key={index}>
                   <Box
                     sx={{
-                      width: "100%",
-                      position: "relative",
-                      borderRadius: 2,
-                      overflow: "hidden",
-                      mb: { xs: 1.5, sm: 2 },
-                      height: { xs: 180, sm: 350 },
-                      backgroundColor: theme.palette.mode === "dark" 
-                        ? "rgba(255, 255, 255, 0.05)" 
-                        : "rgba(0, 0, 0, 0.05)",
-                      boxShadow: theme.shadows[4],
-                      flexShrink: 0,
+                      display: "flex",
+                      flexDirection: "column",
+                      alignItems: "center",
+                      p: { xs: 1.5, sm: 3 },
+                      pb: { xs: 3, sm: 3 },
+                      minHeight: "fit-content",
                     }}
                   >
-                    <AnimatePresence mode="wait">
-                      {!imageLoaded[index] && !imageError[index] && (
-                        <motion.div
-                          initial={{ opacity: 1 }}
-                          exit={{ opacity: 0 }}
-                          style={{
-                            position: "absolute",
-                            inset: 0,
-                            width: "100%",
-                            height: "100%",
-                          }}
-                        >
-                          <Skeleton
-                            variant="rectangular"
-                            width="100%"
-                            height="100%"
-                            animation="wave"
-                          />
-                        </motion.div>
-                      )}
-                    </AnimatePresence>
-
-                    <motion.img
-                      src={imageError[index] ? placeholderImage : step.img}
-                      alt={step.title || `Adım ${index + 1}`}
-                      loading="lazy"
-                      onLoad={() => handleImageLoad(index)}
-                      onError={(e) => handleImageError(index, e)}
-                      variants={slideVariants}
-                      initial="initial"
-                      animate={imageLoaded[index] ? "animate" : "initial"}
-                      style={{
-                        width: "100%",
-                        height: "100%",
-                        objectFit: "cover",
-                        display: imageLoaded[index] || imageError[index] ? "block" : "none",
-                        opacity: imageLoaded[index] ? 1 : 0,
-                      }}
-                    />
-                  </Box>
-
-                  {/* Content */}
-                  <motion.div
-                    variants={slideVariants}
-                    initial="initial"
-                    animate="animate"
-                    style={{ width: "100%", textAlign: "center" }}
-                  >
-                    {step.title && (
-                      <Typography
-                        variant="h6"
-                        component="h3"
-                        sx={{
-                          fontWeight: 600,
-                          mb: { xs: 0.75, sm: 1 },
-                          color: theme.palette.text.primary,
-                          fontSize: { xs: "1rem", sm: "1.25rem" },
-                          wordWrap: "break-word",
-                          overflowWrap: "break-word",
-                          hyphens: "auto",
-                          px: { xs: 1, sm: 0 },
-                        }}
-                      >
-                        {step.title}
-                      </Typography>
-                    )}
-
-                    <Typography
-                      variant="body1"
+                    {/* Image Container */}
+                    <Box
                       sx={{
-                        mb: step.meta ? { xs: 0.75, sm: 1 } : 0,
-                        color: theme.palette.text.secondary,
-                        lineHeight: { xs: 1.5, sm: 1.7 },
-                        fontSize: { xs: "0.875rem", sm: "1rem" },
-                        wordWrap: "break-word",
-                        overflowWrap: "break-word",
-                        hyphens: "auto",
-                        px: { xs: 1, sm: 0 },
+                        width: "100%",
+                        position: "relative",
+                        borderRadius: 2,
+                        overflow: "hidden",
+                        mb: { xs: 2, sm: 2.5 },
+                        height: { xs: 250, sm: 400 },
+                        backgroundColor: theme.palette.mode === "dark" 
+                          ? "rgba(255, 255, 255, 0.05)" 
+                          : "rgba(0, 0, 0, 0.05)",
+                        boxShadow: theme.shadows[2],
+                        flexShrink: 0,
                       }}
                     >
-                      {step.text}
-                    </Typography>
+                      <AnimatePresence mode="wait">
+                        {!imageLoaded[index] && !imageError[index] && (
+                          <motion.div
+                            initial={{ opacity: 1 }}
+                            exit={{ opacity: 0 }}
+                            style={{
+                              position: "absolute",
+                              inset: 0,
+                              width: "100%",
+                              height: "100%",
+                            }}
+                          >
+                            <Skeleton
+                              variant="rectangular"
+                              width="100%"
+                              height="100%"
+                              animation="wave"
+                            />
+                          </motion.div>
+                        )}
+                      </AnimatePresence>
 
-                    {step.meta && (
-                      <Typography
-                        variant="caption"
-                        sx={{
-                          display: "block",
-                          mt: { xs: 0.75, sm: 1 },
-                          color: theme.palette.text.disabled,
-                          fontStyle: "italic",
-                          fontSize: { xs: "0.7rem", sm: "0.75rem" },
-                          wordWrap: "break-word",
-                          overflowWrap: "break-word",
-                          px: { xs: 1, sm: 0 },
+                      <motion.img
+                        src={imageError[index] ? placeholderImage : step.img}
+                        alt={`${productName} - Resim ${index + 1}`}
+                        loading="lazy"
+                        onLoad={() => handleImageLoad(index)}
+                        onError={(e) => handleImageError(index, e)}
+                        variants={slideVariants}
+                        initial="initial"
+                        animate={imageLoaded[index] ? "animate" : "initial"}
+                        style={{
+                          width: "100%",
+                          height: "100%",
+                          objectFit: "cover",
+                          display: imageLoaded[index] || imageError[index] ? "block" : "none",
+                          opacity: imageLoaded[index] ? 1 : 0,
                         }}
+                      />
+                    </Box>
+
+                    {/* Content - Sadece storyText */}
+                    {step.text && (
+                      <motion.div
+                        variants={slideVariants}
+                        initial="initial"
+                        animate="animate"
+                        style={{ width: "100%", textAlign: "center" }}
                       >
-                        {step.meta}
-                      </Typography>
+                        <Typography
+                          variant="body1"
+                          sx={{
+                            color: theme.palette.text.secondary,
+                            lineHeight: { xs: 1.6, sm: 1.8 },
+                            fontSize: { xs: "0.9rem", sm: "1rem" },
+                            fontStyle: "italic",
+                            wordWrap: "break-word",
+                            overflowWrap: "break-word",
+                            hyphens: "auto",
+                            px: { xs: 2, sm: 3 },
+                            opacity: 0.85,
+                          }}
+                        >
+                          {step.text}
+                        </Typography>
+                      </motion.div>
                     )}
-                  </motion.div>
-                </Box>
-              </SwiperSlide>
-            ))}
+                  </Box>
+                </SwiperSlide>
+              );
+            })}
           </Swiper>
         </Box>
       </DialogContent>

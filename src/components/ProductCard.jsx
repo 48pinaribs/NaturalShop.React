@@ -1,21 +1,60 @@
-import React, { useState } from "react";
+import React, { useState, useMemo } from "react";
 import "./ProductCard.css";
 import { useNavigate } from "react-router-dom";
 import { useCart } from "../context/CartContext";
 import { toast } from "react-toastify";
 import ProductJourneyModal from "./ProductJourneyModal";
-import { getProductJourneySteps } from "../data/productJourneySteps";
 
-function ProductCard({ id, name, description, price, imageUrl, image }) {
+const baseUrl = "http://localhost:5072";
+
+// URL'nin tam URL olup olmadığını kontrol eden helper fonksiyon
+const ensureFullUrl = (url) => {
+  if (!url) return "";
+  // Eğer zaten tam URL ise (http:// veya https:// ile başlıyorsa) olduğu gibi döndür
+  if (url.startsWith("http://") || url.startsWith("https://")) {
+    return url;
+  }
+  // Değilse baseUrl ekle
+  // URL'nin başındaki / karakterini kaldır (varsa)
+  const cleanUrl = url.startsWith("/") ? url.substring(1) : url;
+  return `${baseUrl}/${cleanUrl}`;
+};
+
+function ProductCard({ id, name, description, price, imageUrl, image, storyText, storyImages }) {
   const navigate = useNavigate();
   const [isHovered, setIsHovered] = useState(false);
-  const imageSrc = imageUrl || image || "";
+  const imageSrc = ensureFullUrl(imageUrl || image || "");
+  console.log("Product image source:", imageSrc);
   const [imgSrc, setImgSrc] = useState(imageSrc);
   const { addToCart } = useCart();
   const [showStory, setShowStory] = useState(false);
   const [isAdding, setIsAdding] = useState(false);
   const [showLeaf, setShowLeaf] = useState(false);
   const displayName = name || "Ürün";
+
+  // Dinamik steps oluşturma - her ürünün kendi storyImages dizisindeki resimleri kullan
+  const journeySteps = useMemo(() => {
+    if (!storyImages || !Array.isArray(storyImages) || storyImages.length === 0) {
+      console.log("⚠️ storyImages boş veya geçersiz:", storyImages);
+      return [];
+    }
+
+    console.log("🖼️ Ürün için storyImages:", displayName, storyImages);
+    
+    // storyImages dizisindeki tüm resimleri kullanarak steps oluştur
+    const steps = storyImages.map((img, index) => {
+      const fullImageUrl = ensureFullUrl(img);
+      console.log(`📸 Adım ${index + 1}:`, fullImageUrl);
+      
+      return {
+        img: fullImageUrl,
+        text: storyText || "",
+      };
+    });
+    
+    console.log("✅ Oluşturulan steps sayısı:", steps.length);
+    return steps;
+  }, [storyImages, storyText, displayName]);
 
   const handleAdd = (e) => {
     e.stopPropagation(); // Prevent navigation when clicking add button
@@ -116,7 +155,7 @@ function ProductCard({ id, name, description, price, imageUrl, image }) {
         open={showStory}
         onClose={() => setShowStory(false)}
         productName={displayName}
-        steps={getProductJourneySteps(displayName)}
+        steps={journeySteps}
         autoPlay={true}
         intervalMs={3500}
       />

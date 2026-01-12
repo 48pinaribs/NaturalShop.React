@@ -16,19 +16,34 @@ function ProductsPage({ category: categoryProp }) {
       try {
         setLoading(true);
         setError(null);
-        console.log("Fetching from:", apiConfig.endpoints.products.list);
-        const res = await fetch(apiConfig.endpoints.products.list);
-        console.log("Fetch response status:", res);
+        const apiUrl = apiConfig.endpoints.products.list;
+        console.log("🔍 API URL:", apiUrl);
+        console.log("🔍 API Base URL:", apiConfig.API_BASE_URL);
+        
+        const res = await fetch(apiUrl);
+        console.log("📡 Response Status:", res.status, res.statusText);
+        console.log("📡 Response OK:", res.ok);
+        console.log("📡 Response Headers:", Object.fromEntries(res.headers.entries()));
         
         if (!res.ok) {
-          throw new Error(`HTTP error! status: ${res.status}`);
+          const errorText = await res.text();
+          console.error("❌ Error Response Body:", errorText);
+          throw new Error(`HTTP error! status: ${res.status} - ${res.statusText}`);
         }
         
         const data = await res.json();
-        console.log("Products received:", data);
+        console.log("✅ Products received:", data);
+        console.log("✅ Products count:", Array.isArray(data) ? data.length : "Not an array");
+        console.log("✅ Products data type:", typeof data);
+        if (Array.isArray(data) && data.length > 0) {
+          console.log("✅ First product:", data[0]);
+        }
         
         // Filter products by category if category is specified
         let filteredProducts = data;
+        console.log("🔍 Category:", category);
+        console.log("🔍 Original products count:", Array.isArray(data) ? data.length : 0);
+        
         if (category) {
           const categoryMap = {
             zeytinyagi: ["yağlar", "zeytinyağı", "zeytinyagi", "oil", "zeytin"],
@@ -44,6 +59,7 @@ function ProductsPage({ category: categoryProp }) {
           };
           
           const searchTerms = categoryMap[category.toLowerCase()] || [category.toLowerCase()];
+          console.log("🔍 Search terms:", searchTerms);
           filteredProducts = data.filter(product => {
             const name = (product.name || "").toLowerCase();
             const description = (product.description || "").toLowerCase();
@@ -54,8 +70,10 @@ function ProductsPage({ category: categoryProp }) {
               productCategory.includes(term)
             );
           });
+          console.log("🔍 Filtered products count:", filteredProducts.length);
         }
         
+        console.log("✅ Setting products:", filteredProducts.length);
         setProducts(filteredProducts);
       } catch (err) {
         console.error("Error fetching products:", err);

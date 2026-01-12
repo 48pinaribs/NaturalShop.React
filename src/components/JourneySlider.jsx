@@ -7,29 +7,38 @@ import "./JourneySlider.css";
 
 const steps = [
   {
-    text: "Dalaman Gürleyk köyünün bereketli topraklarında başlar…",
-    img: "/images/journey_sliders/jour_sli1.png",
+    text: "",
+    img: "/images/journey_sliders/jour_sli1.jpeg",
   },
   {
-    text: "Zeytin ağaçları, incir bahçeleri, çam ormanları ve bağlarda doğal olarak yetişir…",
-    img: "/images/journey_sliders/jour_sli2.png",
+    text: "Köyümüzden sofralarınıza, doğanın en saf haliyle ulaşır.",
+    img: "/images/journey_sliders/jour_sli2.jpg",
   },
   {
-    text: "Güneş, hava, su… Hiçbir kimyasal katkı maddesi olmadan, doğanın kendi dengesi.",
-    img: "/images/journey_sliders/jour_sli3.png",
+    text: "Köyümüzden sofralarınıza, doğanın en saf haliyle ulaşır.",
+    img: "/images/journey_sliders/jour_sli3.jpg",
   },
   {
-    text: "Geleneksel yöntemlerle işlenir: Soğuk sıkım zeytinyağı, güneşte kurutma, taş değirmende öğütme…",
-    img: "/images/journey_sliders/jour_sli4.png",
+    text: "Köyümüzden sofralarınıza, doğanın en saf haliyle ulaşır.",
+    img: "/images/journey_sliders/jour_sli4.jpg",
   },
   {
-    text: "Köydeki ustaların elinde özenle hazırlanır ve paketlenir.",
-    img: "/images/journey_sliders/jour_sli5.png",
+    text: "Köyümüzden sofralarınıza, doğanın en saf haliyle ulaşır.",
+    img: "/images/journey_sliders/jour_sli5.jpg",
   },
   {
-    text: "Dalaman'dan sofralarınıza, doğanın en saf haliyle ulaşır.",
-    img: "/images/journey_sliders/jour_sli6.png",
+    text: "Köyümüzden sofralarınıza, doğanın en saf haliyle ulaşır.",
+    img: "/images/journey_sliders/jour_sli6.jpg",
+  },
+  {
+    text: "Köyümüzden sofralarınıza, doğanın en saf haliyle ulaşır.",
+    img: "/images/journey_sliders/jour_sli7.jpg",
+  },
+  {
+    text: "Köyümüzden sofralarınıza, doğanın en saf haliyle ulaşır.",
+    img: "/images/journey_sliders/jour_sli8.jpeg",
   }
+
 ];
 
 export default function JourneySlider() {
