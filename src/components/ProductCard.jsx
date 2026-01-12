@@ -6,6 +6,8 @@ import { toast } from "react-toastify";
 import ProductJourneyModal from "./ProductJourneyModal";
 import apiConfig from "../config/api.js";
 
+const baseUrl = "https://naturalshop-api.onrender.com";
+
 // URL'nin tam URL olup olmadığını kontrol eden helper fonksiyon
 const ensureFullUrl = (url) => {
   if (!url) return "";
@@ -14,7 +16,7 @@ const ensureFullUrl = (url) => {
     return url;
   }
   // Değilse baseUrl ekle
-  const baseUrl = apiConfig.API_BASE_URL.replace(/\/$/, ""); // Trailing slash'i kaldır
+  //const baseUrl = apiConfig.API_BASE_URL.replace(/\/$/, ""); // Trailing slash'i kaldır
   // URL'nin başındaki / karakterini kaldır (varsa)
   const cleanUrl = url.startsWith("/") ? url.substring(1) : url;
   return `${baseUrl}/${cleanUrl}`;
