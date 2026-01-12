@@ -1,11 +1,10 @@
-import React, { useState, useMemo } from "react";
+import React, { useState, useMemo, useEffect } from "react";
 import "./ProductCard.css";
 import { useNavigate } from "react-router-dom";
 import { useCart } from "../context/CartContext";
 import { toast } from "react-toastify";
 import ProductJourneyModal from "./ProductJourneyModal";
-
-const baseUrl = "http://localhost:5072";
+import apiConfig from "../config/api.js";
 
 // URL'nin tam URL olup olmadığını kontrol eden helper fonksiyon
 const ensureFullUrl = (url) => {
@@ -15,16 +14,22 @@ const ensureFullUrl = (url) => {
     return url;
   }
   // Değilse baseUrl ekle
+  const baseUrl = apiConfig.API_BASE_URL.replace(/\/$/, ""); // Trailing slash'i kaldır
   // URL'nin başındaki / karakterini kaldır (varsa)
   const cleanUrl = url.startsWith("/") ? url.substring(1) : url;
   return `${baseUrl}/${cleanUrl}`;
 };
 
-function ProductCard({ id, name, description, price, imageUrl, image, storyText, storyImages }) {
+function ProductCard({ id, name, description, price, imageUrl, image, ImageUrl, Images, storyText, storyImages, StoryImages }) {
   const navigate = useNavigate();
   const [isHovered, setIsHovered] = useState(false);
-  const imageSrc = ensureFullUrl(imageUrl || image || "");
-  console.log("Product image source:", imageSrc);
+  
+  // Hem camelCase hem PascalCase destekle (API'den gelen veriye göre)
+  const productImageUrl = imageUrl || ImageUrl || image || (Images && Images.length > 0 ? Images[0] : null);
+  const productStoryImages = storyImages || StoryImages;
+  
+  const imageSrc = ensureFullUrl(productImageUrl || "");
+  console.log("Product image source:", imageSrc, "from:", { imageUrl, ImageUrl, image, Images });
   const [imgSrc, setImgSrc] = useState(imageSrc);
   const { addToCart } = useCart();
   const [showStory, setShowStory] = useState(false);
@@ -32,17 +37,24 @@ function ProductCard({ id, name, description, price, imageUrl, image, storyText,
   const [showLeaf, setShowLeaf] = useState(false);
   const displayName = name || "Ürün";
 
+  // imageSrc değiştiğinde imgSrc'yi güncelle
+  useEffect(() => {
+    if (imageSrc) {
+      setImgSrc(imageSrc);
+    }
+  }, [imageSrc]);
+
   // Dinamik steps oluşturma - her ürünün kendi storyImages dizisindeki resimleri kullan
   const journeySteps = useMemo(() => {
-    if (!storyImages || !Array.isArray(storyImages) || storyImages.length === 0) {
-      console.log("⚠️ storyImages boş veya geçersiz:", storyImages);
+    if (!productStoryImages || !Array.isArray(productStoryImages) || productStoryImages.length === 0) {
+      console.log("⚠️ storyImages boş veya geçersiz:", productStoryImages);
       return [];
     }
 
-    console.log("🖼️ Ürün için storyImages:", displayName, storyImages);
+    console.log("🖼️ Ürün için storyImages:", displayName, productStoryImages);
     
     // storyImages dizisindeki tüm resimleri kullanarak steps oluştur
-    const steps = storyImages.map((img, index) => {
+    const steps = productStoryImages.map((img, index) => {
       const fullImageUrl = ensureFullUrl(img);
       console.log(`📸 Adım ${index + 1}:`, fullImageUrl);
       
@@ -54,7 +66,7 @@ function ProductCard({ id, name, description, price, imageUrl, image, storyText,
     
     console.log("✅ Oluşturulan steps sayısı:", steps.length);
     return steps;
-  }, [storyImages, storyText, displayName]);
+  }, [productStoryImages, storyText, displayName]);
 
   const handleAdd = (e) => {
     e.stopPropagation(); // Prevent navigation when clicking add button

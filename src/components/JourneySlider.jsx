@@ -7,7 +7,7 @@ import "./JourneySlider.css";
 
 const steps = [
   {
-    text: "",
+    text: "Köyümüzden sofralarınıza, doğanın en saf haliyle ulaşır.",
     img: "/images/journey_sliders/jour_sli1.jpeg",
   },
   {

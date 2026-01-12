@@ -59,7 +59,7 @@ function ProductDetails() {
         <div className="product-image-section">
           <div className="product-image-wrapper">
             <img
-              src={product.imageUrl || placeholder}
+              src={product.imageUrl || product.ImageUrl || (product.Images && product.Images.length > 0 ? product.Images[0] : null) || placeholder}
               alt={product.name || product.description}
               className="product-main-image"
               onError={handleImageError}
