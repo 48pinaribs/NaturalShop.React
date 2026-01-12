@@ -401,45 +401,48 @@ const ProductJourneyModal = ({
                         flexShrink: 0,
                       }}
                     >
-                      <AnimatePresence mode="wait">
-                        {!imageLoaded[index] && !imageError[index] && (
-                          <motion.div
-                            initial={{ opacity: 1 }}
-                            exit={{ opacity: 0 }}
-                            style={{
-                              position: "absolute",
-                              inset: 0,
-                              width: "100%",
-                              height: "100%",
-                            }}
-                          >
-                            <Skeleton
-                              variant="rectangular"
-                              width="100%"
-                              height="100%"
-                              animation="wave"
-                            />
-                          </motion.div>
-                        )}
-                      </AnimatePresence>
+                     <AnimatePresence mode="wait">
+  {!imageLoaded[index] && !imageError[index] && (
+    <motion.div
+      initial={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+      style={{
+        position: "absolute", // Resmin tam üstüne oturması için
+        top: 0,
+        left: 0,
+        zIndex: 2, // Resmin üstünde kalması için
+        width: "100%",
+        height: "100%",
+      }}
+    >
+      <Skeleton
+        variant="rectangular"
+        width="100%"
+        height="100%"
+        animation="wave"
+      />
+    </motion.div>
+  )}
+</AnimatePresence>
 
-                      <motion.img
-                        src={imageError[index] ? placeholderImage : step.img}
-                        alt={`${productName} - Resim ${index + 1}`}
-                        loading="lazy"
-                        onLoad={() => handleImageLoad(index)}
-                        onError={(e) => handleImageError(index, e)}
-                        variants={slideVariants}
-                        initial="initial"
-                        animate={imageLoaded[index] ? "animate" : "initial"}
-                        style={{
-                          width: "100%",
-                          height: "100%",
-                          objectFit: "cover",
-                          display: imageLoaded[index] || imageError[index] ? "block" : "none",
-                          opacity: imageLoaded[index] ? 1 : 0,
-                        }}
-                      />
+                     <motion.img
+  src={imageError[index] ? placeholderImage : step.img}
+  alt={`${productName} - Resim ${index + 1}`}
+  loading="eager" // Mobilde daha hızlı yüklenmesi için 'eager' yaptık
+  onLoad={() => handleImageLoad(index)}
+  onError={(e) => handleImageError(index, e)}
+  variants={slideVariants}
+  initial="initial"
+  animate={imageLoaded[index] ? "animate" : "initial"}
+  style={{
+    width: "100%",
+    height: "100%",
+    objectFit: "cover",
+    // display: "none" SATIRINI SİLDİK
+    opacity: imageLoaded[index] ? 1 : 0, // Resim yüklenince görünür yap
+    transition: "opacity 0.5s ease-in-out", // Yumuşak bir geçiş ekledik
+  }}
+/>
                     </Box>
 
                     {/* Content - Sadece storyText */}
