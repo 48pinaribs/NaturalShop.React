@@ -3,7 +3,6 @@
 }
 
 .product-card {
-  border: 2px solid rgba(79, 111, 82, 0.25);
   border-radius: 16px;
   padding: 8px;
   background: linear-gradient(180deg, #FFFFFF 0%, #F1F8F4 100%);
