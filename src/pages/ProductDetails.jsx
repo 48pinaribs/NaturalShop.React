@@ -4,6 +4,7 @@ import { useCart } from "../context/CartContext";
 import { toast } from "react-toastify";
 import "./ProductDetails.css";
 import apiConfig from "../config/api.js";
+import ProductDetailSkeleton from "../components/ProductDetailSkeleton";
 
 function ProductDetails() {
   const { id } = useParams();
@@ -14,8 +15,8 @@ function ProductDetails() {
 
   useEffect(() => {
     fetch(apiConfig.endpoints.products.detail(id))
-      .then(res => res.json())
-      .then(data => setProduct(data));
+      .then((res) => res.json())
+      .then((data) => setProduct(data));
   }, [id]);
 
   const handleAddToCart = () => {
@@ -31,11 +32,7 @@ function ProductDetails() {
   };
 
   if (!product) {
-    return (
-      <div className="product-details-container">
-        <div className="product-details-loading">Yükleniyor...</div>
-      </div>
-    );
+    return <ProductDetailSkeleton />;
   }
 
   const placeholder =
@@ -59,50 +56,68 @@ function ProductDetails() {
         <div className="product-image-section">
           <div className="product-image-wrapper">
             <img
-              src={product.imageUrl || product.ImageUrl || (product.Images && product.Images.length > 0 ? product.Images[0] : null) || placeholder}
+              src={
+                product.imageUrl ||
+                product.ImageUrl ||
+                (product.Images && product.Images.length > 0
+                  ? product.Images[0]
+                  : null) ||
+                placeholder
+              }
               alt={product.name || product.description}
               className="product-main-image"
               onError={handleImageError}
             />
           </div>
         </div>
-        
+
         <div className="product-info-section">
           <div className="product-info-content">
             {product.category && (
               <div className="product-category">{product.category}</div>
             )}
-            
-            <h1 className="product-title">{product.name || product.description}</h1>
-            
+
+            <h1 className="product-title">
+              {product.name || product.description}
+            </h1>
+
             {product.description && product.description !== product.name && (
-              <p className="product-description-text">
-                {product.description}
-              </p>
+              <p className="product-description-text">{product.description}</p>
             )}
-            
+
             <div className="product-price-section">
-              <span className="product-price">₺{Number(product.price).toFixed(2)}</span>
+              <span className="product-price">
+                ₺{Number(product.price).toFixed(2)}
+              </span>
               {product.stock !== undefined && (
-                <span className={`product-stock ${product.stock > 0 ? 'in-stock' : 'out-of-stock'}`}>
-                  {product.stock > 0 ? 'Stokta Var' : 'Stokta Yok'}
+                <span
+                  className={`product-stock ${
+                    product.stock > 0 ? "in-stock" : "out-of-stock"
+                  }`}
+                >
+                  {product.stock > 0 ? "Stokta Var" : "Stokta Yok"}
                 </span>
               )}
             </div>
-            
+
             <button
-              className={`premium-btn premium-btn-secondary ${isAddingToCart ? 'adding' : ''}`}
+              className={`premium-btn premium-btn-secondary ${
+                isAddingToCart ? "adding" : ""
+              }`}
               onClick={handleAddToCart}
-              disabled={isAddingToCart || (product.stock !== undefined && product.stock === 0)}
+              disabled={
+                isAddingToCart ||
+                (product.stock !== undefined && product.stock === 0)
+              }
             >
               <span className="premium-btn-content">
                 <span className="premium-btn-icon">🍃</span>
                 <span className="premium-btn-text">
-                  {isAddingToCart ? 'Ekleniyor...' : 'Sepete Ekle'}
+                  {isAddingToCart ? "Ekleniyor..." : "Sepete Ekle"}
                 </span>
               </span>
             </button>
-            
+
             {product.stock !== undefined && product.stock > 0 && (
               <div className="product-stock-info">
                 {product.stock} adet stokta mevcut
