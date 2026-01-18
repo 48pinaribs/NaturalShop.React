@@ -4,7 +4,6 @@ import { useNavigate } from "react-router-dom";
 import { useCart } from "../context/CartContext";
 import { toast } from "react-toastify";
 import ProductJourneyModal from "./ProductJourneyModal";
-import apiConfig from "../config/api.js";
 
 const baseUrl = "https://naturalshop-api.onrender.com";
 // const baseUrl = "http://localhost:5072";
