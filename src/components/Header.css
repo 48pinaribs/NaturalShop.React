@@ -92,7 +92,7 @@
 
 .header-logo-full {
   display: block;
-  height: 45px;
+  height: 70px;
   width: auto;
   max-width: 280px;
   min-width: 180px;
@@ -816,7 +816,7 @@
   }
 
   .header-logo-full {
-    height: 40px;
+    height: 55px;
     max-width: 220px;
     min-width: 150px;
   }
@@ -853,7 +853,6 @@
   }
 
   .header-logo-full {
-    height: 36px;
     max-width: 160px;
     min-width: 110px;
   }
@@ -905,7 +904,6 @@
   }
 
   .header-logo-full {
-    height: 32px;
     max-width: 140px;
     min-width: 100px;
   }
@@ -972,7 +970,6 @@
   .header-logo-full {
     max-width: 120px;
     min-width: 90px;
-    height: 28px;
   }
 
   .header-action-btn {

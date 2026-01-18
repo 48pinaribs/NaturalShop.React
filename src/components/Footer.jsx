@@ -1,4 +1,4 @@
-import  { useState} from "react";
+import { useState } from "react";
 import { Link } from "react-router-dom";
 import {
   FiInstagram,
@@ -11,7 +11,7 @@ import {
 } from "react-icons/fi";
 import { FaWhatsapp } from "react-icons/fa";
 import { toast } from "react-toastify";
-import logoFull from "../assets/logo.svg";
+import logo2Png from "../assets/logo2.png";
 import "./Footer.css";
 
 const Footer = () => {
@@ -75,9 +75,7 @@ const Footer = () => {
     { label: "İletişim", path: "/contact" },
   ];
 
-  const categories = [
-    { label: "Tüm Ürünler", path: "/", icon: "🌿" },
-  ];
+  const categories = [{ label: "Tüm Ürünler", path: "/", icon: "🌿" }];
 
   return (
     <footer className="footer" role="contentinfo">
@@ -88,10 +86,15 @@ const Footer = () => {
           <div className="footer-column">
             <div className="footer-section">
               <div className="footer-brand">
-                <img src={logoFull} alt="Köyümüzden Sofranıza - Doğal Köy Ürünleri" className="footer-logo" />
+                <img
+                  src={logo2Png}
+                  alt="Köyümüzden Sofranıza - Doğal Köy Ürünleri"
+                  className="footer-logo"
+                />
               </div>
               <p className="footer-description">
-                Dalaman Gürleyk köyünden sofranıza, doğal üretim ile organik yaşam
+                Dalaman Gürleyk köyünden sofranıza, doğal üretim ile organik
+                yaşam
               </p>
               <div className="footer-social">
                 {socialLinks.map((social) => (
@@ -154,7 +157,9 @@ const Footer = () => {
               </span>
             </button>
             <nav
-              className={`footer-links ${expandedSections.quickLinks ? "expanded" : ""}`}
+              className={`footer-links ${
+                expandedSections.quickLinks ? "expanded" : ""
+              }`}
               id="quickLinks-content"
             >
               {quickLinks.map((link) => (
@@ -184,7 +189,9 @@ const Footer = () => {
               </span>
             </button>
             <nav
-              className={`footer-links ${expandedSections.categories ? "expanded" : ""}`}
+              className={`footer-links ${
+                expandedSections.categories ? "expanded" : ""
+              }`}
               id="categories-content"
             >
               {categories.map((category) => (
@@ -198,7 +205,9 @@ const Footer = () => {
                     }
                   }}
                 >
-                  {category.icon && <span className="footer-link-icon">{category.icon}</span>}
+                  {category.icon && (
+                    <span className="footer-link-icon">{category.icon}</span>
+                  )}
                   {category.label}
                 </Link>
               ))}
@@ -216,10 +225,12 @@ const Footer = () => {
               İletişim
               <span className="toggle-icon">
                 {expandedSections.contact ? "−" : "+"}
-          </span>
+              </span>
             </button>
             <div
-              className={`footer-contact ${expandedSections.contact ? "expanded" : ""}`}
+              className={`footer-contact ${
+                expandedSections.contact ? "expanded" : ""
+              }`}
               id="contact-content"
             >
               <a
@@ -231,10 +242,7 @@ const Footer = () => {
                 <FiMapPin className="contact-icon" />
                 <span>Muğla, Dalaman</span>
               </a>
-              <a
-                href="tel:+905551234567"
-                className="footer-contact-item"
-              >
+              <a href="tel:+905551234567" className="footer-contact-item">
                 <FiPhone className="contact-icon" />
                 <span>+90 (543) 943 44 72</span>
               </a>

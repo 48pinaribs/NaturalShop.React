@@ -10,7 +10,7 @@ import {
   FiPhone,
 } from "react-icons/fi";
 import { useCart } from "../context/CartContext";
-import logoFull from "../assets/logo.svg";
+import logoFull from "../assets/logo2.png";
 import "./Header.css";
 
 const Header = () => {
@@ -41,7 +41,7 @@ const Header = () => {
   // Get user from localStorage on mount and listen for changes
   useEffect(() => {
     checkAuthStatus();
-    
+
     // Listen for storage changes (cross-tab)
     const handleStorageChange = () => {
       checkAuthStatus();
@@ -121,8 +121,10 @@ const Header = () => {
   const isPhoneLogin = (user) => {
     if (!user) return false;
     // Email @naturalshop.local ile bitiyorsa veya phoneNumber varsa telefon ile giriş yapmıştır
-    return (user.email && user.email.endsWith("@naturalshop.local")) || 
-           (user.phoneNumber && !user.email?.includes("@"));
+    return (
+      (user.email && user.email.endsWith("@naturalshop.local")) ||
+      (user.phoneNumber && !user.email?.includes("@"))
+    );
   };
 
   // Telefon numarasını formatla (son 4 haneyi göster)
@@ -150,7 +152,9 @@ const Header = () => {
 
   // Check if current route is active
   const isActiveRoute = (path) => {
-    return location.pathname === path || location.pathname.startsWith(path + "/");
+    return (
+      location.pathname === path || location.pathname.startsWith(path + "/")
+    );
   };
 
   return (
@@ -178,15 +182,15 @@ const Header = () => {
       <header className="header" role="banner">
         <div className="header-container">
           {/* Logo - Left */}
-          <Link 
-            to="/" 
-            className="header-logo" 
+          <Link
+            to="/"
+            className="header-logo"
             aria-label="Köyümüzden Sofranıza Ana Sayfa"
             onClick={closeMobileMenu}
           >
-            <img 
-              src={logoFull} 
-              alt="Köyümüzden Sofranıza - Doğal Köy Ürünleri" 
+            <img
+              src={logoFull}
+              alt="Köyümüzden Sofranıza - Doğal Köy Ürünleri"
               className="header-logo-full"
             />
           </Link>
@@ -201,7 +205,11 @@ const Header = () => {
             {/* Ürünlerimiz - Desktop */}
             <Link
               to="/"
-              className={`header-action-link ${isActiveRoute("/") && !isActiveRoute("/products") ? "active" : ""}`}
+              className={`header-action-link ${
+                isActiveRoute("/") && !isActiveRoute("/products")
+                  ? "active"
+                  : ""
+              }`}
               onClick={closeMobileMenu}
             >
               <span className="action-icon">🌿</span>
@@ -212,7 +220,9 @@ const Header = () => {
             {user && (
               <Link
                 to="/orders"
-                className={`header-action-link ${isActiveRoute("/orders") ? "active" : ""}`}
+                className={`header-action-link ${
+                  isActiveRoute("/orders") ? "active" : ""
+                }`}
                 onClick={closeMobileMenu}
               >
                 <FiPackage className="action-icon" />
@@ -246,7 +256,10 @@ const Header = () => {
                   aria-haspopup="true"
                 >
                   {isPhoneLogin(user) ? (
-                    <span className="user-avatar user-avatar-phone" aria-hidden="true">
+                    <span
+                      className="user-avatar user-avatar-phone"
+                      aria-hidden="true"
+                    >
                       <FiPhone className="phone-icon" />
                     </span>
                   ) : (
@@ -265,7 +278,11 @@ const Header = () => {
                           <span className="user-name">Hoş Geldiniz</span>
                           <span className="user-phone">
                             <FiPhone className="phone-icon-small" />
-                            {formatPhoneNumber(user.phoneNumber || user.email?.replace("@naturalshop.local", "") || "")}
+                            {formatPhoneNumber(
+                              user.phoneNumber ||
+                                user.email?.replace("@naturalshop.local", "") ||
+                                ""
+                            )}
                           </span>
                         </>
                       ) : (
@@ -299,7 +316,9 @@ const Header = () => {
             ) : (
               <Link
                 to="/phone-login"
-                className={`header-action-link ${isActiveRoute("/phone-login") ? "active" : ""}`}
+                className={`header-action-link ${
+                  isActiveRoute("/phone-login") ? "active" : ""
+                }`}
                 onClick={closeMobileMenu}
               >
                 <FiUser className="action-icon" />
@@ -325,7 +344,9 @@ const Header = () => {
 
         {/* Mobile Menu Drawer */}
         <div
-          className={`mobile-drawer ${isMobileMenuOpen ? "mobile-drawer-open" : ""}`}
+          className={`mobile-drawer ${
+            isMobileMenuOpen ? "mobile-drawer-open" : ""
+          }`}
           ref={mobileMenuRef}
           role="navigation"
           aria-label="Mobil navigasyon"
@@ -343,7 +364,11 @@ const Header = () => {
                       <span className="mobile-user-name">Hoş Geldiniz</span>
                       <span className="mobile-user-phone">
                         <FiPhone className="phone-icon-small" />
-                        {formatPhoneNumber(user.phoneNumber || user.email?.replace("@naturalshop.local", "") || "")}
+                        {formatPhoneNumber(
+                          user.phoneNumber ||
+                            user.email?.replace("@naturalshop.local", "") ||
+                            ""
+                        )}
                       </span>
                     </div>
                   </>
@@ -365,7 +390,11 @@ const Header = () => {
             <nav className="mobile-nav">
               <Link
                 to="/"
-                className={`mobile-nav-link ${isActiveRoute("/") && !isActiveRoute("/products") ? "active" : ""}`}
+                className={`mobile-nav-link ${
+                  isActiveRoute("/") && !isActiveRoute("/products")
+                    ? "active"
+                    : ""
+                }`}
                 onClick={closeMobileMenu}
               >
                 <span className="mobile-nav-category-icon">🌿</span>
@@ -374,17 +403,21 @@ const Header = () => {
               {user && (
                 <Link
                   to="/orders"
-                  className={`mobile-nav-link ${isActiveRoute("/orders") ? "active" : ""}`}
+                  className={`mobile-nav-link ${
+                    isActiveRoute("/orders") ? "active" : ""
+                  }`}
                   onClick={closeMobileMenu}
                 >
                   <FiPackage className="mobile-nav-icon" />
                   Siparişlerim
                 </Link>
               )}
-              
+
               <Link
                 to="/cart"
-                className={`mobile-nav-link ${isActiveRoute("/cart") ? "active" : ""}`}
+                className={`mobile-nav-link ${
+                  isActiveRoute("/cart") ? "active" : ""
+                }`}
                 onClick={closeMobileMenu}
               >
                 <FiShoppingCart className="mobile-nav-icon" />
@@ -406,7 +439,9 @@ const Header = () => {
               ) : (
                 <Link
                   to="/phone-login"
-                  className={`mobile-nav-link ${isActiveRoute("/phone-login") ? "active" : ""}`}
+                  className={`mobile-nav-link ${
+                    isActiveRoute("/phone-login") ? "active" : ""
+                  }`}
                   onClick={closeMobileMenu}
                 >
                   <FiUser className="mobile-nav-icon" />
