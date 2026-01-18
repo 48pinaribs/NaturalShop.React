@@ -6,6 +6,22 @@ import "./ProductDetails.css";
 import apiConfig from "../config/api.js";
 import ProductDetailSkeleton from "../components/ProductDetailSkeleton";
 
+const baseUrl = "https://naturalshop-api.onrender.com";
+// const baseUrl = "http://localhost:5072";
+
+// URL'nin tam URL olup olmadığını kontrol eden helper fonksiyon
+const ensureFullUrl = (url) => {
+  if (!url) return "";
+  // Eğer zaten tam URL ise (http:// veya https:// ile başlıyorsa) olduğu gibi döndür
+  if (url.startsWith("http://") || url.startsWith("https://")) {
+    return url;
+  }
+  // Değilse baseUrl ekle
+  // URL'nin başındaki / karakterini kaldır (varsa)
+  const cleanUrl = url.startsWith("/") ? url.substring(1) : url;
+  return `${baseUrl}/${cleanUrl}`;
+};
+
 function ProductDetails() {
   const { id } = useParams();
   const navigate = useNavigate();
@@ -38,6 +54,16 @@ function ProductDetails() {
     return <ProductDetailSkeleton />;
   }
 
+  // Hem camelCase hem PascalCase destekle (API'den gelen veriye göre)
+  // Ana sayfada görünen resmi kullan (ProductCard ile aynı mantık)
+  const productImageUrl =
+    product.imageUrl ||
+    product.ImageUrl ||
+    product.image ||
+    (product.Images && product.Images.length > 0 ? product.Images[0] : null);
+
+  const imageSrc = ensureFullUrl(productImageUrl || "");
+
   const placeholder =
     "data:image/svg+xml;utf8," +
     encodeURIComponent(
@@ -59,9 +85,7 @@ function ProductDetails() {
         <div className="product-image-section">
           <div className="product-image-wrapper">
             <img
-              src={
-                product.imageUrl || placeholder
-              }
+              src={imageSrc || placeholder}
               alt={product.name || product.description}
               className="product-main-image"
               onError={handleImageError}
