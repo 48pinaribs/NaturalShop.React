@@ -19,6 +19,9 @@ function ProductDetails() {
       .then((data) => setProduct(data));
   }, [id]);
 
+  console.log(product);
+  console.log(id);
+
   const handleAddToCart = () => {
     if (product && product.stock > 0) {
       setIsAddingToCart(true);
@@ -57,12 +60,7 @@ function ProductDetails() {
           <div className="product-image-wrapper">
             <img
               src={
-                product.imageUrl ||
-                product.ImageUrl ||
-                (product.Images && product.Images.length > 0
-                  ? product.Images[0]
-                  : null) ||
-                placeholder
+                product.imageUrl || placeholder
               }
               alt={product.name || product.description}
               className="product-main-image"
