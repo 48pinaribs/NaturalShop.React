@@ -126,7 +126,6 @@ function ProductsPage({ category: categoryProp }) {
     return (
       <main className="app-container">
         <JourneySlider />
-        <h1 className="products-heading"></h1>
         <div className="products-grid">
           {/* 8 adet hayalet kart oluşturuyoruz */}
           {Array.from(new Array(8)).map((_, index) => (

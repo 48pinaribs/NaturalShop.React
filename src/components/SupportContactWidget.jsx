@@ -1,8 +1,7 @@
-import { useState, useEffect, useRef,useCallback} from "react";
+import { useState, useEffect, useRef, useCallback } from "react";
 import { FiX, FiPhone, FiMessageCircle } from "react-icons/fi";
 import { FaWhatsapp } from "react-icons/fa";
 import "./SupportContactWidget.css";
-
 
 const messages = [
   "Merak ettiklerin mi var? 🌿",
@@ -14,9 +13,8 @@ const messages = [
   "Ürünlerimizle ilgili soruların mı var?",
   "Köy yumurtası, peynir, kuru meyve veya şifalı bitkiler hakkında soru sorabilirsin",
   "Geleneksel yöntemlerle üretilen ürünlerimiz hakkında bilgi almak ister misin?",
-  "Doğal ve organik ürünlerimiz için bize ulaşabilirsin"
+  "Doğal ve organik ürünlerimiz için bize ulaşabilirsin",
 ];
-
 
 function SupportContactWidget() {
   const [isOpen, setIsOpen] = useState(false);
@@ -35,12 +33,12 @@ function SupportContactWidget() {
   const autoOpenPanel = useCallback(() => {
     // Eğer zaten açıksa açma
     if (isOpen) return;
-    
+
     // Rastgele bir mesaj seç
     const randomMessage = messages[Math.floor(Math.random() * messages.length)];
     setMessage(randomMessage);
     setIsOpen(true);
-    
+
     // 8 saniye sonra otomatik kapat
     if (autoCloseTimerRef.current) {
       clearTimeout(autoCloseTimerRef.current);
@@ -54,10 +52,10 @@ function SupportContactWidget() {
   useEffect(() => {
     // İlk açılış: 10-15 saniye sonra
     const initialDelay = 10000 + Math.random() * 5000;
-    
+
     const initialTimer = setTimeout(() => {
       autoOpenPanel();
-      
+
       // Sonraki açılışlar için interval başlat (25-40 saniye)
       const scheduleNext = () => {
         const nextDelay = 25000 + Math.random() * 15000; // 25-40 saniye arası
@@ -66,7 +64,7 @@ function SupportContactWidget() {
           scheduleNext(); // Bir sonraki açılışı planla
         }, nextDelay);
       };
-      
+
       scheduleNext();
     }, initialDelay);
 
@@ -89,16 +87,17 @@ function SupportContactWidget() {
 
     const handleScroll = () => {
       const now = Date.now();
-      
+
       // Scroll olduğunda ve widget kapalıysa
-      if (!isOpen && now - lastScrollTime > 15000) { // Son açılıştan 15 saniye geçmişse
+      if (!isOpen && now - lastScrollTime > 15000) {
+        // Son açılıştan 15 saniye geçmişse
         lastScrollTime = now;
-        
+
         // Scroll durduktan 3-5 saniye sonra aç
         if (scrollTimeout) {
           clearTimeout(scrollTimeout);
         }
-        
+
         scrollTimeout = setTimeout(() => {
           // %30 ihtimalle aç (çok sık açılmasın)
           if (Math.random() < 0.3) {
@@ -109,18 +108,18 @@ function SupportContactWidget() {
     };
 
     window.addEventListener("scroll", handleScroll, { passive: true });
-    
+
     return () => {
       window.removeEventListener("scroll", handleScroll);
       if (scrollTimeout) {
         clearTimeout(scrollTimeout);
       }
     };
-  }, [isOpen]);
+  }, [isOpen, autoOpenPanel]);
 
   const togglePanel = () => {
     setIsOpen(!isOpen);
-    
+
     // Otomatik kapanma timer'ını temizle
     if (autoCloseTimerRef.current) {
       clearTimeout(autoCloseTimerRef.current);
@@ -199,4 +198,3 @@ function SupportContactWidget() {
 }
 
 export default SupportContactWidget;
-
