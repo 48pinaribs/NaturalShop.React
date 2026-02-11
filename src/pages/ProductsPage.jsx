@@ -22,18 +22,19 @@ function ProductsPage({ category: categoryProp }) {
         console.log("🔍 API Base URL:", apiConfig.API_BASE_URL);
 
         const res = await fetch(apiUrl);
+        console.log("📡 Fetch completed");
         console.log("📡 Response Status:", res.status, res.statusText);
         console.log("📡 Response OK:", res.ok);
         console.log(
           "📡 Response Headers:",
-          Object.fromEntries(res.headers.entries())
+          Object.fromEntries(res.headers.entries()),
         );
 
         if (!res.ok) {
           const errorText = await res.text();
           console.error("❌ Error Response Body:", errorText);
           throw new Error(
-            `HTTP error! status: ${res.status} - ${res.statusText}`
+            `HTTP error! status: ${res.status} - ${res.statusText}`,
           );
         }
 
@@ -41,7 +42,7 @@ function ProductsPage({ category: categoryProp }) {
         console.log("✅ Products received:", data);
         console.log(
           "✅ Products count:",
-          Array.isArray(data) ? data.length : "Not an array"
+          Array.isArray(data) ? data.length : "Not an array",
         );
         console.log("✅ Products data type:", typeof data);
         if (Array.isArray(data) && data.length > 0) {
@@ -53,7 +54,7 @@ function ProductsPage({ category: categoryProp }) {
         console.log("🔍 Category:", category);
         console.log(
           "🔍 Original products count:",
-          Array.isArray(data) ? data.length : 0
+          Array.isArray(data) ? data.length : 0,
         );
 
         if (category) {
@@ -103,7 +104,7 @@ function ProductsPage({ category: categoryProp }) {
               (term) =>
                 name.includes(term) ||
                 description.includes(term) ||
-                productCategory.includes(term)
+                productCategory.includes(term),
             );
           });
           console.log("🔍 Filtered products count:", filteredProducts.length);
