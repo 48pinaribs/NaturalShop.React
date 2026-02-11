@@ -16,7 +16,7 @@ const apiConfig = {
       verifyCode: `${API_BASE_URL}/auth/verify-code`,
     },
     products: {
-      list: `${API_BASE_URL}/Product`,
+      list: `${API_BASE_URL}/Product`.trim(),
       detail: (id) => `${API_BASE_URL}/Product/${id}`,
     },
     payments: {
