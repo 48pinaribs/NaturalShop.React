@@ -200,11 +200,11 @@
     justify-content: center;
     gap: 0;
     padding: 6px 10px;
-    background: transparent;
+    background: chocolate;
     border: none;
-    border-radius: 0;
+    border-radius: 10px;
     cursor: pointer;
-    color: #4F6F52;
+    color: chartreuse;
     transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     flex-shrink: 0;
     font-weight: 500;
@@ -304,18 +304,11 @@
   .journey-text-mobile {
     font-size: 11px;
     font-weight: 500;
-    color: #4F6F52;
+    color: chartreuse;
     letter-spacing: 0.1px;
     transition: color 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   }
   
-  /* Hover ve active durumlarında animasyonları hızlandır */
-  .journey-badge-mobile:active,
-  .journey-badge-mobile:hover {
-    color: #66BB6A;
-    background: rgba(102, 187, 106, 0.05);
-    animation: journeyFloat 1.5s ease-in-out infinite;
-  }
   
   .journey-badge-mobile:hover::after {
     opacity: 0.8;
@@ -330,21 +323,6 @@
   
   .journey-badge-mobile:hover .journey-icon-mobile {
     animation: iconSway 1.5s ease-in-out infinite, iconMove 1s ease-in-out infinite;
-  }
-  
-  /* Hover'da ikon ekstra hareket */
-  @keyframes iconMove {
-    0%, 100% {
-      transform: translateX(0);
-    }
-    50% {
-      transform: translateX(3px);
-    }
-  }
-  
-  .journey-badge-mobile:hover .journey-text-mobile,
-  .journey-badge-mobile:hover .journey-line-2 {
-    color: #66BB6A;
   }
   
   /* Metin için hafif glow efekti */
