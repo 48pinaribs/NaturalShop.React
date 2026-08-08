@@ -13,7 +13,7 @@ function OrdersPage() {
   useEffect(() => {
     const token = localStorage.getItem("token");
     if (!token) {
-      navigate("/login");
+      navigate("/phone-login");
       return;
     }
 
@@ -31,7 +31,7 @@ function OrdersPage() {
         
         if (!res.ok) {
           if (res.status === 401) {
-            navigate("/login");
+            navigate("/phone-login");
             return;
           }
           throw new Error("Siparişler yüklenemedi");
@@ -39,13 +39,14 @@ function OrdersPage() {
         
         const data = await res.json();
         
-        // Sadece Status'u "Paid" olan siparişleri filtrele
-        const paidOrders = data.filter(order => {
-          const status = order.status || order.Status || "";
-          return status.toLowerCase() === "paid";
+        // Sadece onaylanmış siparişleri göster: kart ile ödenmiş (Paid) veya
+        // kapıda ödeme ile oluşturulmuş (CashOnDelivery) siparişler
+        const confirmedOrders = data.filter(order => {
+          const status = (order.status || order.Status || "").toLowerCase();
+          return status === "paid" || status === "cashondelivery";
         });
-        
-        setOrders(paidOrders);
+
+        setOrders(confirmedOrders);
       } catch (err) {
         console.error("Error fetching orders:", err);
         setError(err.message || "Siparişler yüklenirken bir hata oluştu");
@@ -60,6 +61,7 @@ function OrdersPage() {
   const getStatusIcon = (status) => {
     switch (status?.toLowerCase()) {
       case "paid":
+      case "cashondelivery":
         return <FiCheckCircle className="status-icon status-paid" />;
       case "pending":
         return <FiClock className="status-icon status-pending" />;
@@ -74,6 +76,8 @@ function OrdersPage() {
     switch (status?.toLowerCase()) {
       case "paid":
         return "Ödendi";
+      case "cashondelivery":
+        return "Kapıda Ödeme Onaylandı";
       case "pending":
         return "Beklemede";
       case "failed":

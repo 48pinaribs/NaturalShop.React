@@ -218,6 +218,23 @@
   box-shadow: 0 6px 16px rgba(79, 111, 82, 0.2);
 }
 
+.radio-card-disabled {
+  cursor: not-allowed;
+  opacity: 0.55;
+  filter: grayscale(0.4);
+}
+
+.radio-card-disabled:hover {
+  transform: none;
+  box-shadow: 0 2px 8px rgba(79, 111, 82, 0.1);
+  border-color: rgba(79, 111, 82, 0.18);
+  background: linear-gradient(135deg, #FFFFFF 0%, #F1F8F4 100%);
+}
+
+.radio-card-disabled input[type="radio"] {
+  cursor: not-allowed;
+}
+
 .radio-card input[type="radio"] {
   width: 20px;
   height: 20px;

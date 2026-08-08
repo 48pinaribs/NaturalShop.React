@@ -94,7 +94,9 @@ const ProductJourneyModal = ({
     }
   }, [open]);
 
-  const placeholderImage = "https://via.placeholder.com/800x400?text=Görsel+Yüklenemedi";
+  // Üçüncü parti bir servise bağımlı olmamak için hata görselini yerelde (inline SVG) üretiyoruz
+  const placeholderImage = "data:image/svg+xml;utf8," +
+    encodeURIComponent(`<svg xmlns="http://www.w3.org/2000/svg" width="800" height="400"><rect width="100%" height="100%" fill="#f5f5f5"/><text x="50%" y="50%" dominant-baseline="middle" text-anchor="middle" fill="#999" font-family="Arial, Helvetica, sans-serif" font-size="20">Görsel Yüklenemedi</text></svg>`);
 
   // Modal kapatma işlemi - sadece ESC tuşu veya kapat butonu ile kapanır
   const handleClose = (event, reason) => {

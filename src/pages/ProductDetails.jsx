@@ -6,9 +6,6 @@ import "./ProductDetails.css";
 import apiConfig from "../config/api.js";
 import ProductDetailSkeleton from "../components/ProductDetailSkeleton";
 
-const baseUrl = "https://naturalshop-api.onrender.com";
-// const baseUrl = "http://localhost:5072";
-
 // URL'nin tam URL olup olmadığını kontrol eden helper fonksiyon
 const ensureFullUrl = (url) => {
   if (!url) return "";
@@ -16,10 +13,10 @@ const ensureFullUrl = (url) => {
   if (url.startsWith("http://") || url.startsWith("https://")) {
     return url;
   }
-  // Değilse baseUrl ekle
+  // Değilse sunucunun kök adresini ekle (ortama göre .env üzerinden gelir)
   // URL'nin başındaki / karakterini kaldır (varsa)
   const cleanUrl = url.startsWith("/") ? url.substring(1) : url;
-  return `${baseUrl}/${cleanUrl}`;
+  return `${apiConfig.SERVER_BASE_URL}/${cleanUrl}`;
 };
 
 function ProductDetails() {

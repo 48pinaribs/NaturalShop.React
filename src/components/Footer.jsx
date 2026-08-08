@@ -17,7 +17,6 @@ import "./Footer.css";
 const Footer = () => {
   const currentYear = new Date().getFullYear();
   const [email, setEmail] = useState("");
-  const [isLoading, setIsLoading] = useState(false);
   const [expandedSections, setExpandedSections] = useState({});
 
   const toggleSection = (section) => {
@@ -34,13 +33,11 @@ const Footer = () => {
       return;
     }
 
-    setIsLoading(true);
-    // Simüle edilmiş newsletter kayıt
-    setTimeout(() => {
-      toast.success("Kaydolduğunuz için teşekkürler! 🎉");
-      setEmail("");
-      setIsLoading(false);
-    }, 500);
+    // NOT: Bülten kaydını saklayacak bir backend endpoint'i henüz yok.
+    // Kullanıcıyı yanıltmamak için sahte bir "kaydoldunuz" mesajı göstermek yerine
+    // özelliğin henüz aktif olmadığını açıkça belirtiyoruz.
+    toast.info("Bülten kaydı yakında aktif olacak. İlginiz için teşekkürler! 🌿");
+    setEmail("");
   };
 
   const socialLinks = [
@@ -128,13 +125,11 @@ const Footer = () => {
                   placeholder="E-posta adresiniz"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
-                  disabled={isLoading}
                   aria-label="E-posta adresi"
                 />
                 <button
                   type="submit"
                   className="newsletter-button"
-                  disabled={isLoading}
                   aria-label="Bültene kayıt ol"
                 >
                   <FiArrowRight className="newsletter-icon" />

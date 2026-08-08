@@ -4,9 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { useCart } from "../context/CartContext";
 import { toast } from "react-toastify";
 import ProductJourneyModal from "./ProductJourneyModal";
-
-const baseUrl = "https://naturalshop-api.onrender.com";
-// const baseUrl = "http://localhost:5072";
+import apiConfig from "../config/api.js";
 
 // URL'nin tam URL olup olmadığını kontrol eden helper fonksiyon
 const ensureFullUrl = (url) => {
@@ -15,11 +13,10 @@ const ensureFullUrl = (url) => {
   if (url.startsWith("http://") || url.startsWith("https://")) {
     return url;
   }
-  // Değilse baseUrl ekle
-  //const baseUrl = apiConfig.API_BASE_URL.replace(/\/$/, ""); // Trailing slash'i kaldır
+  // Değilse sunucunun kök adresini ekle (ortama göre .env üzerinden gelir)
   // URL'nin başındaki / karakterini kaldır (varsa)
   const cleanUrl = url.startsWith("/") ? url.substring(1) : url;
-  return `${baseUrl}/${cleanUrl}`;
+  return `${apiConfig.SERVER_BASE_URL}/${cleanUrl}`;
 };
 
 function ProductCard({

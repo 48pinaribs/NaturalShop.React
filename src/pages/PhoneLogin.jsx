@@ -157,6 +157,9 @@ function PhoneLogin() {
           localStorage.setItem("user", JSON.stringify(response.data.user));
         }
 
+        // Header gibi bileşenlerin sayfa yenilenmeden auth durumunu anında güncellemesi için
+        window.dispatchEvent(new Event("authchange"));
+
         toast.success("Giriş başarılı! 🎉");
         
         // Ödeme sayfasına yönlendir

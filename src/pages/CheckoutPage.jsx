@@ -3,11 +3,11 @@ import { toast } from "react-toastify";
 import { useNavigate, Link } from "react-router-dom";
 import { useState } from "react";
 import axios from "axios";
-import { 
-  FiUser, 
-  FiPhone, 
-  FiHome, 
-  FiTruck, 
+import {
+  FiUser,
+  FiPhone,
+  FiHome,
+  FiTruck,
   FiCreditCard,
   FiLoader
 } from "react-icons/fi";
@@ -19,9 +19,20 @@ function CheckoutPage() {
   const navigate = useNavigate();
   const [isProcessing, setIsProcessing] = useState(false);
 
+  // Teslimat bilgileri - checkout formundan toplanır ve siparişle birlikte backend'e gönderilir
+  const [recipientName, setRecipientName] = useState("");
+  const [recipientPhone, setRecipientPhone] = useState("");
+  const [shippingAddress, setShippingAddress] = useState("");
+  const [fieldErrors, setFieldErrors] = useState({});
+
+  // NOT: Şu an tek aktif ödeme yöntemi Kapıda Ödeme.
+  // Kredi Kartı seçeneği, backend'de gerçek (production) Iyzico anahtarları
+  // tanımlanana kadar bilinçli olarak devre dışı bırakıldı (bkz. PaymentsController.StartPayment,
+  // bu akış hazır olduğunda burada tekrar aktif edilebilir).
+
   const handleSubmit = async (e) => {
     e.preventDefault();
-    
+
     // Kullanıcı giriş yapmış mı kontrol et
     const token = localStorage.getItem("token");
     if (!token) {
@@ -36,7 +47,20 @@ function CheckoutPage() {
       navigate("/cart");
       return;
     }
-    //
+
+    // Teslimat bilgilerini doğrula
+    const errors = {};
+    if (!recipientName.trim()) errors.recipientName = "Ad soyad gereklidir";
+    if (!recipientPhone.trim()) errors.recipientPhone = "Telefon numarası gereklidir";
+    if (!shippingAddress.trim()) errors.shippingAddress = "Adres gereklidir";
+
+    if (Object.keys(errors).length > 0) {
+      setFieldErrors(errors);
+      toast.error("Lütfen teslimat bilgilerinizi eksiksiz doldurun");
+      return;
+    }
+    setFieldErrors({});
+
     setIsProcessing(true);
 
     // Backend'e gönderilecek DTO formatına çevir
@@ -50,18 +74,16 @@ function CheckoutPage() {
           productId: productId,
           quantity: item.quantity
         };
-      })
+      }),
+      recipientName: recipientName.trim(),
+      recipientPhone: recipientPhone.trim(),
+      shippingAddress: shippingAddress.trim(),
     };
 
-    console.log("Ödeme başlatılıyor...", { orderData, token: token ? "Token mevcut" : "Token yok" });
-    console.log("Gönderilen JSON:", JSON.stringify(orderData, null, 2));
-    console.log("Cart items:", cartItems);
-
     try {
-
-      // Iyzico ödeme başlatma endpoint'ine istek gönder
+      // Kapıda Ödeme: online ödeme adımı yok, sipariş doğrudan oluşturulup onaylanır
       const response = await axios.post(
-        apiConfig.endpoints.payments.start,
+        apiConfig.endpoints.orders.create,
         orderData,
         {
           headers: {
@@ -71,37 +93,18 @@ function CheckoutPage() {
         }
       );
 
-      console.log("API yanıtı:", response.data);
-
-      // Başarılı yanıt alındıysa Iyzico ödeme sayfasına yönlendir
-      if (response.data && response.data.paymentPageUrl) {
-        // Sepeti temizle (ödeme başarılı olursa callback'te zaten temizlenecek)
-        // clearCart(); // Şimdilik yorum satırı - callback'te temizlenecek
-        
-        // Iyzico ödeme sayfasına yönlendir
-        window.location.href = response.data.paymentPageUrl;
+      if (response.data && response.data.orderId) {
+        navigate("/order-success");
       } else {
-        throw new Error("Ödeme sayfası URL'i alınamadı");
+        throw new Error("Sipariş oluşturulamadı");
       }
     } catch (error) {
-      console.error("Ödeme başlatma hatası:", error);
-      console.error("Tam hata response:", JSON.stringify(error.response?.data, null, 2));
-      console.error("Gönderilen orderData:", JSON.stringify(orderData, null, 2));
-      console.error("Hata detayları:", {
-        message: error.message,
-        response: error.response?.data,
-        status: error.response?.status,
-        config: error.config?.url
-      });
-      
-      let errorMessage = "Ödeme başlatılamadı. Lütfen tekrar deneyin.";
-      
+      let errorMessage = "Sipariş oluşturulamadı. Lütfen tekrar deneyin.";
+
       if (error.response) {
-        // Backend'den gelen hata mesajı
         const responseData = error.response.data;
-        
+
         if (responseData?.errors && Array.isArray(responseData.errors)) {
-          // ModelState hataları varsa göster
           const errorDetails = responseData.errors.map(e => `${e.field || 'Bilinmeyen alan'}: ${e.error || e.Error || ''}`).join(', ');
           errorMessage = `Geçersiz veri: ${errorDetails}`;
         } else if (responseData?.message) {
@@ -109,7 +112,7 @@ function CheckoutPage() {
         } else if (typeof responseData === 'string') {
           errorMessage = responseData;
         }
-        
+
         if (error.response.status === 401) {
           errorMessage = "Oturum süreniz dolmuş. Lütfen tekrar giriş yapın.";
           localStorage.removeItem("token");
@@ -118,15 +121,13 @@ function CheckoutPage() {
           return;
         }
       } else if (error.request) {
-        // İstek gönderildi ama yanıt alınamadı
         errorMessage = "Sunucuya bağlanılamadı. Lütfen backend'in çalıştığından emin olun.";
-        console.error("Sunucuya bağlanılamadı:", error.request);
       } else {
-        // İstek hazırlanırken hata oluştu
         errorMessage = error.message || errorMessage;
       }
-      
+
       toast.error(errorMessage);
+    } finally {
       setIsProcessing(false);
     }
   };
@@ -167,36 +168,54 @@ function CheckoutPage() {
                 <FiUser className="checkout-label-icon" />
                 <span className="checkout-label-text">Ad Soyad</span>
               </div>
-              <input 
-                type="text" 
-                className="checkout-input" 
+              <input
+                type="text"
+                className="checkout-input"
                 placeholder="Adınız ve soyadınız"
-                required 
+                value={recipientName}
+                onChange={(e) => setRecipientName(e.target.value)}
+                style={fieldErrors.recipientName ? { borderColor: "#d32f2f" } : undefined}
+                required
               />
+              {fieldErrors.recipientName && (
+                <span style={{ color: "#d32f2f", fontSize: "0.85rem" }}>{fieldErrors.recipientName}</span>
+              )}
             </label>
             <label className="checkout-label">
               <div className="checkout-label-header">
                 <FiPhone className="checkout-label-icon" />
                 <span className="checkout-label-text">Telefon</span>
               </div>
-              <input 
-                type="tel" 
-                className="checkout-input" 
+              <input
+                type="tel"
+                className="checkout-input"
                 placeholder="05XX XXX XX XX"
-                required 
+                value={recipientPhone}
+                onChange={(e) => setRecipientPhone(e.target.value)}
+                style={fieldErrors.recipientPhone ? { borderColor: "#d32f2f" } : undefined}
+                required
               />
+              {fieldErrors.recipientPhone && (
+                <span style={{ color: "#d32f2f", fontSize: "0.85rem" }}>{fieldErrors.recipientPhone}</span>
+              )}
             </label>
             <label className="checkout-label">
               <div className="checkout-label-header">
                 <FiHome className="checkout-label-icon" />
                 <span className="checkout-label-text">Adres</span>
               </div>
-              <textarea 
-                rows="4" 
-                className="checkout-input checkout-textarea" 
+              <textarea
+                rows="4"
+                className="checkout-input checkout-textarea"
                 placeholder="Adres bilgilerinizi giriniz"
+                value={shippingAddress}
+                onChange={(e) => setShippingAddress(e.target.value)}
+                style={fieldErrors.shippingAddress ? { borderColor: "#d32f2f" } : undefined}
                 required
               ></textarea>
+              {fieldErrors.shippingAddress && (
+                <span style={{ color: "#d32f2f", fontSize: "0.85rem" }}>{fieldErrors.shippingAddress}</span>
+              )}
             </label>
           </div>
 
@@ -213,11 +232,11 @@ function CheckoutPage() {
                   <span className="radio-card-subtitle">Ücretsiz</span>
                 </div>
               </label>
-              <label className="radio-card">
-                <input type="radio" name="kargo" />
+              <label className="radio-card radio-card-disabled">
+                <input type="radio" name="kargo" disabled />
                 <div className="radio-card-content">
                   <span className="radio-card-title">Hızlı Teslimat</span>
-                  <span className="radio-card-subtitle">+39 TL</span>
+                  <span className="radio-card-subtitle">Yakında</span>
                 </div>
               </label>
             </div>
@@ -236,18 +255,18 @@ function CheckoutPage() {
                   <span className="radio-card-subtitle">Nakit veya Kredi Kartı</span>
                 </div>
               </label>
-              <label className="radio-card">
-                <input type="radio" name="pay" />
+              <label className="radio-card radio-card-disabled">
+                <input type="radio" name="pay" disabled />
                 <div className="radio-card-content">
-                  <span className="radio-card-title">Kredi Kartı</span>
+                  <span className="radio-card-title">Kredi Kartı (Online)</span>
                   <span className="radio-card-subtitle">Yakında</span>
                 </div>
               </label>
             </div>
           </div>
 
-          <button 
-            type="submit" 
+          <button
+            type="submit"
             className="premium-btn premium-btn-primary"
             disabled={isProcessing}
           >
@@ -259,8 +278,8 @@ function CheckoutPage() {
                 </>
               ) : (
                 <>
-                  <span className="premium-btn-icon">💳</span>
-                  <span className="premium-btn-text">Ödemeye Geç</span>
+                  <span className="premium-btn-icon">📦</span>
+                  <span className="premium-btn-text">Siparişi Onayla (Kapıda Ödeme)</span>
                 </>
               )}
             </span>
@@ -275,12 +294,12 @@ function CheckoutPage() {
               const itemName = item.name || item.title || "Ürün";
               const placeholder = "data:image/svg+xml;utf8," +
                 encodeURIComponent(`<svg xmlns="http://www.w3.org/2000/svg" width="200" height="160"><rect width="100%" height="100%" fill="#f5f5f5"/><text x="50%" y="50%" dominant-baseline="middle" text-anchor="middle" fill="#999" font-size="14">No Image</text></svg>`);
-              
+
               return (
                 <div key={item.id} className="summary-item">
-                  <img 
-                    src={itemImage || placeholder} 
-                    alt={itemName} 
+                  <img
+                    src={itemImage || placeholder}
+                    alt={itemName}
                     className="summary-item-image"
                     onError={(e) => {
                       if (e.target.src !== placeholder) {

@@ -16,6 +16,7 @@ import Login from "./pages/Login";
 import Register from "./pages/Register";
 import PhoneLogin from "./pages/PhoneLogin";
 import About from "./pages/About";
+import NotFound from "./pages/NotFound";
 import SupportContactWidget from "./components/SupportContactWidget";
 import ScrollToTop from "./components/ScrollToTop";
 import { ToastContainer } from "react-toastify";
@@ -28,8 +29,7 @@ function App() {
 
       <Routes>
         <Route path="/" element={<ProductsPage />} />
-        <Route path="/products/zeytinyagi" element={<ProductsPage category="zeytinyagi" />} />
-        <Route path="/products/incir" element={<ProductsPage category="incir" />} />
+        <Route path="/products/:category" element={<ProductsPage />} />
         <Route path="/product/:id" element={<ProductDetails />} />
         <Route path="/cart" element={<CartPage />} />
         <Route path="/checkout" element={<CheckoutPage />} />
@@ -41,6 +41,7 @@ function App() {
         <Route path="/phone-login" element={<PhoneLogin />} />
         <Route path="/register" element={<Register />} />
         <Route path="/about" element={<About />} />
+        <Route path="*" element={<NotFound />} />
       </Routes>
 
       <Footer />

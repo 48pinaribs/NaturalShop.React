@@ -23,7 +23,7 @@ function OrderDetailsPage() {
   useEffect(() => {
     const token = localStorage.getItem("token");
     if (!token) {
-      navigate("/login");
+      navigate("/phone-login");
       return;
     }
 
@@ -41,7 +41,7 @@ function OrderDetailsPage() {
         
         if (!res.ok) {
           if (res.status === 401) {
-            navigate("/login");
+            navigate("/phone-login");
             return;
           }
           if (res.status === 404) {
@@ -53,13 +53,13 @@ function OrderDetailsPage() {
         
         const data = await res.json();
         
-        // Sadece Paid durumundaki siparişleri göster
-        const status = data.status || data.Status || "";
-        if (status.toLowerCase() !== "paid") {
-          setError("Bu sipariş henüz ödenmedi");
+        // Sadece onaylanmış siparişleri göster (kart ile ödenmiş veya kapıda ödeme)
+        const status = (data.status || data.Status || "").toLowerCase();
+        if (status !== "paid" && status !== "cashondelivery") {
+          setError("Bu sipariş henüz onaylanmadı");
           return;
         }
-        
+
         setOrder(data);
       } catch (err) {
         console.error("Error fetching order details:", err);
@@ -75,6 +75,7 @@ function OrderDetailsPage() {
   const getStatusIcon = (status) => {
     switch (status?.toLowerCase()) {
       case "paid":
+      case "cashondelivery":
         return <FiCheckCircle className="status-icon status-paid" />;
       case "pending":
         return <FiClock className="status-icon status-pending" />;
@@ -87,8 +88,21 @@ function OrderDetailsPage() {
     switch (status?.toLowerCase()) {
       case "paid":
         return "Ödendi";
+      case "cashondelivery":
+        return "Kapıda Ödeme Onaylandı";
       case "pending":
         return "Beklemede";
+      default:
+        return "Beklemede";
+    }
+  };
+
+  const getPaymentStatusText = (status) => {
+    switch (status?.toLowerCase()) {
+      case "paid":
+        return "Ödendi (Kredi Kartı)";
+      case "cashondelivery":
+        return "Teslimatta Ödenecek";
       default:
         return "Beklemede";
     }
@@ -199,7 +213,7 @@ function OrderDetailsPage() {
               <FiCreditCard className="info-icon" />
               <div className="info-content">
                 <span className="info-label">Ödeme Durumu</span>
-                <span className="info-value">Ödendi</span>
+                <span className="info-value">{getPaymentStatusText(orderStatus)}</span>
               </div>
             </div>
 
@@ -210,6 +224,21 @@ function OrderDetailsPage() {
                 <span className="info-value">Hazırlanıyor</span>
               </div>
             </div>
+
+            {(order.shippingAddress || order.ShippingAddress) && (
+              <div className="info-item">
+                <FiHome className="info-icon" />
+                <div className="info-content">
+                  <span className="info-label">Teslimat Adresi</span>
+                  <span className="info-value">
+                    {order.recipientName || order.RecipientName}
+                    {(order.recipientPhone || order.RecipientPhone) && ` · ${order.recipientPhone || order.RecipientPhone}`}
+                    <br />
+                    {order.shippingAddress || order.ShippingAddress}
+                  </span>
+                </div>
+              </div>
+            )}
           </div>
         </div>
 

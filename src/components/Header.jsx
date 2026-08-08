@@ -13,15 +13,31 @@ import { useCart } from "../context/CartContext";
 import logoFull from "../assets/logo2.png";
 import "./Header.css";
 
+// Ürün kategorileri (ProductsPage.jsx'teki categoryMap ile aynı slug'lar)
+const CATEGORIES = [
+  { slug: "zeytinyagi", title: "Zeytinyağı" },
+  { slug: "incir", title: "İncir" },
+  { slug: "bal-pekmez", title: "Bal & Pekmez" },
+  { slug: "kurutulmus-meyveler", title: "Kurutulmuş Meyveler" },
+  { slug: "taze-meyveler", title: "Taze Meyveler" },
+  { slug: "kurutulmus-sebzeler", title: "Kurutulmuş Sebzeler" },
+  { slug: "konserveler", title: "Konserveler" },
+  { slug: "sut-urunleri", title: "Süt Ürünleri" },
+  { slug: "sifali-bitkiler", title: "Şifalı Bitkiler" },
+  { slug: "baharatlar", title: "Baharatlar" },
+];
+
 const Header = () => {
   const { cartItems } = useCart();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isUserMenuOpen, setIsUserMenuOpen] = useState(false);
+  const [isCategoryMenuOpen, setIsCategoryMenuOpen] = useState(false);
   const [user, setUser] = useState(null);
   const navigate = useNavigate();
   const location = useLocation();
   const mobileMenuRef = useRef(null);
   const userMenuRef = useRef(null);
+  const categoryMenuRef = useRef(null);
 
   // Check auth status from localStorage
   const checkAuthStatus = () => {
@@ -42,23 +58,22 @@ const Header = () => {
   useEffect(() => {
     checkAuthStatus();
 
-    // Listen for storage changes (cross-tab)
-    const handleStorageChange = () => {
-      checkAuthStatus();
-    };
-
-    window.addEventListener("storage", handleStorageChange);
-    const interval = setInterval(checkAuthStatus, 500);
+    // Listen for storage changes (cross-tab) ve aynı sekme içindeki
+    // login/logout işlemlerinden sonra tetiklenen "authchange" event'i
+    // (localStorage'ı 500ms'de bir yoklamak yerine)
+    window.addEventListener("storage", checkAuthStatus);
+    window.addEventListener("authchange", checkAuthStatus);
 
     return () => {
-      window.removeEventListener("storage", handleStorageChange);
-      clearInterval(interval);
+      window.removeEventListener("storage", checkAuthStatus);
+      window.removeEventListener("authchange", checkAuthStatus);
     };
   }, []);
 
   // Close mobile menu on route change
   useEffect(() => {
     setIsMobileMenuOpen(false);
+    setIsCategoryMenuOpen(false);
   }, [location.pathname]);
 
   // Body scroll lock when mobile menu is open
@@ -79,6 +94,7 @@ const Header = () => {
       if (e.key === "Escape") {
         setIsMobileMenuOpen(false);
         setIsUserMenuOpen(false);
+        setIsCategoryMenuOpen(false);
       }
     };
     window.addEventListener("keydown", handleEscape);
@@ -94,6 +110,9 @@ const Header = () => {
       if (userMenuRef.current && !userMenuRef.current.contains(e.target)) {
         setIsUserMenuOpen(false);
       }
+      if (categoryMenuRef.current && !categoryMenuRef.current.contains(e.target)) {
+        setIsCategoryMenuOpen(false);
+      }
     };
     document.addEventListener("mousedown", handleClickOutside);
     return () => document.removeEventListener("mousedown", handleClickOutside);
@@ -102,6 +121,7 @@ const Header = () => {
   const handleLogout = () => {
     localStorage.removeItem("token");
     localStorage.removeItem("user");
+    window.dispatchEvent(new Event("authchange"));
     setUser(null);
     setIsUserMenuOpen(false);
     setIsMobileMenuOpen(false);
@@ -197,7 +217,35 @@ const Header = () => {
 
           {/* Desktop Navigation - Center */}
           <nav className="header-nav" aria-label="Ana navigasyon">
-            {/* Navigation can be added here in the future */}
+            <div className="category-menu-wrapper" ref={categoryMenuRef}>
+              <button
+                type="button"
+                className={`nav-link category-menu-trigger ${
+                  isActiveRoute("/products") ? "active" : ""
+                }`}
+                onClick={() => setIsCategoryMenuOpen(!isCategoryMenuOpen)}
+                aria-expanded={isCategoryMenuOpen}
+                aria-haspopup="true"
+              >
+                <span className="nav-icon">🌿</span>
+                Kategoriler
+              </button>
+              {isCategoryMenuOpen && (
+                <div className="user-dropdown category-dropdown" role="menu">
+                  {CATEGORIES.map((cat) => (
+                    <Link
+                      key={cat.slug}
+                      to={`/products/${cat.slug}`}
+                      className="user-dropdown-item"
+                      role="menuitem"
+                      onClick={() => setIsCategoryMenuOpen(false)}
+                    >
+                      <span>{cat.title}</span>
+                    </Link>
+                  ))}
+                </div>
+              )}
+            </div>
           </nav>
 
           {/* Right Side Actions */}
@@ -400,6 +448,22 @@ const Header = () => {
                 <span className="mobile-nav-category-icon">🌿</span>
                 Ürünlerimiz
               </Link>
+
+              <div className="mobile-nav-categories">
+                {CATEGORIES.map((cat) => (
+                  <Link
+                    key={cat.slug}
+                    to={`/products/${cat.slug}`}
+                    className={`mobile-nav-link mobile-nav-subitem ${
+                      isActiveRoute(`/products/${cat.slug}`) ? "active" : ""
+                    }`}
+                    onClick={closeMobileMenu}
+                  >
+                    {cat.title}
+                  </Link>
+                ))}
+              </div>
+
               {user && (
                 <Link
                   to="/orders"

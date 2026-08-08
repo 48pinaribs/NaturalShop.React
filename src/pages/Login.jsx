@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { FiMail, FiLock, FiEye, FiEyeOff } from "react-icons/fi";
+import { toast } from "react-toastify";
 import "./Login.css";
 import apiConfig from "../config/api.js";
 
@@ -203,9 +204,14 @@ function Login() {
               />
               <span>Beni hatırla</span>
             </label>
-            <a href="/forgot-password" className="forgot-link">
+            <button
+              type="button"
+              className="forgot-link"
+              style={{ background: "none", border: "none", padding: 0, font: "inherit", cursor: "pointer" }}
+              onClick={() => toast.info("Bu özellik yakında eklenecek. Telefon numaranızla giriş yapabilirsiniz.")}
+            >
               Şifremi unuttum?
-            </a>
+            </button>
           </div>
 
           {/* Submit Button */}
@@ -264,6 +270,12 @@ function Login() {
             Hesabın yok mu?{" "}
             <a href="/register" className="signup-link">
               Kayıt ol
+            </a>
+          </p>
+          <p>
+            Telefon numaranla giriş yapmak ister misin?{" "}
+            <a href="/phone-login" className="signup-link">
+              Telefonla Giriş
             </a>
           </p>
         </div>
