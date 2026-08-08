@@ -44,12 +44,6 @@ function ProductCard({
   const productStoryImages = storyImages || StoryImages;
 
   const imageSrc = ensureFullUrl(productImageUrl || "");
-  console.log("Product image source:", imageSrc, "from:", {
-    imageUrl,
-    ImageUrl,
-    image,
-    Images,
-  });
   const [imgSrc, setImgSrc] = useState(imageSrc);
   const { addToCart } = useCart();
   const [showStory, setShowStory] = useState(false);
@@ -71,26 +65,17 @@ function ProductCard({
       !Array.isArray(productStoryImages) ||
       productStoryImages.length === 0
     ) {
-      console.log("⚠️ storyImages boş veya geçersiz:", productStoryImages);
       return [];
     }
 
-    console.log("🖼️ Ürün için storyImages:", displayName, productStoryImages);
-
     // storyImages dizisindeki tüm resimleri kullanarak steps oluştur
-    const steps = productStoryImages.map((img, index) => {
-      const fullImageUrl = ensureFullUrl(img);
-      console.log(`📸 Adım ${index + 1}:`, fullImageUrl);
+    const steps = productStoryImages.map((img) => ({
+      img: ensureFullUrl(img),
+      text: storyText || "",
+    }));
 
-      return {
-        img: fullImageUrl,
-        text: storyText || "",
-      };
-    });
-
-    console.log("✅ Oluşturulan steps sayısı:", steps.length);
     return steps;
-  }, [productStoryImages, storyText, displayName]);
+  }, [productStoryImages, storyText]);
 
   const handleAdd = (e) => {
     e.stopPropagation(); // Prevent navigation when clicking add button

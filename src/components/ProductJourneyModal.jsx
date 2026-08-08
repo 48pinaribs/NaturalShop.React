@@ -38,34 +38,11 @@ const ProductJourneyModal = ({
   const [isBeginning, setIsBeginning] = useState(true);
   const [isEnd, setIsEnd] = useState(false);
   
-  console.log("open", open);
-  console.log("steps", steps);
-  // Debug: Modal açıldığında adımları kontrol et
-  useEffect(() => {
-    if (open) {
-      console.log("🔍 ProductJourneyModal açıldı:", {
-        productName,
-        stepsCount: steps.length,
-        steps: steps.map((s, i) => ({ index: i, img: s.img, text: s.text }))
-      });
-      // Resim yollarını kontrol et
-      steps.forEach((step, index) => {
-        const img = new Image();
-        img.onload = () => console.log(`✅ Resim mevcut: ${step.img}`, index);
-        img.onerror = () => console.error(`❌ Resim bulunamadı: ${step.img}`, index);
-        img.src = step.img;
-      });
-    }
-  }, [open, productName, steps]);
-
   const handleImageLoad = (index) => {
-    console.log(`✅ Resim yüklendi: ${steps[index]?.img}`, index);
     setImageLoaded((prev) => ({ ...prev, [index]: true }));
   };
 
-  const handleImageError = (index, event) => {
-    const imgSrc = steps[index]?.img;
-    console.error(`❌ Resim yüklenemedi: ${imgSrc}`, index, event);
+  const handleImageError = (index) => {
     setImageError((prev) => ({ ...prev, [index]: true }));
     setImageLoaded((prev) => ({ ...prev, [index]: true }));
   };
@@ -372,9 +349,6 @@ const ProductJourneyModal = ({
             watchOverflow={true}
           >
             {steps.map((step, index) => {
-              // Her adım için farklı resim gösterildiğini doğrula
-              console.log(`🖼️ Modal - Adım ${index + 1}/${steps.length}:`, step.img);
-              
               return (
                 <SwiperSlide key={index}>
                   <Box
@@ -430,9 +404,13 @@ const ProductJourneyModal = ({
                      <motion.img
   src={imageError[index] ? placeholderImage : step.img}
   alt={`${productName} - Resim ${index + 1}`}
-  loading="eager" // Mobilde daha hızlı yüklenmesi için 'eager' yaptık
+  // Sadece açılışta görünen ilk kareyi hemen yükle, geri kalanı kullanıcı
+  // kaydırdıkça yüklensin - modal açılır açılmaz 6 görseli birden
+  // indirmeye çalışmak (özellikle backend soğukken) ilk karenin
+  // görünmesini gereksiz yere geciktiriyordu.
+  loading={index === 0 ? "eager" : "lazy"}
   onLoad={() => handleImageLoad(index)}
-  onError={(e) => handleImageError(index, e)}
+  onError={() => handleImageError(index)}
   variants={slideVariants}
   initial="initial"
   animate={imageLoaded[index] ? "animate" : "initial"}

@@ -32,9 +32,6 @@ function ProductDetails() {
       .then((data) => setProduct(data));
   }, [id]);
 
-  console.log(product);
-  console.log(id);
-
   const handleAddToCart = () => {
     if (product && product.stock > 0) {
       setIsAddingToCart(true);
