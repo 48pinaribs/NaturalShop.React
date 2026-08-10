@@ -31,10 +31,10 @@ function OrderSuccess() {
             Ana Sayfa
           </Link>
           
-          <button className="success-btn success-btn-outline" disabled>
+          <Link to="/orders" className="success-btn success-btn-outline">
             <FiPackage className="success-btn-icon" />
             Siparişlerim
-          </button>
+          </Link>
         </div>
       </div>
     </main>

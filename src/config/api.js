@@ -20,6 +20,7 @@ const apiConfig = {
       register: `${API_BASE_URL}/auth/register`,
       sendCode: `${API_BASE_URL}/auth/send-code`,
       verifyCode: `${API_BASE_URL}/auth/verify-code`,
+      me: `${API_BASE_URL}/auth/me`,
     },
     products: {
       list: `${API_BASE_URL}/Product`.trim(),
@@ -32,6 +33,11 @@ const apiConfig = {
       list: `${API_BASE_URL}/orders`,
       get: (id) => `${API_BASE_URL}/orders/${id}`,
       create: `${API_BASE_URL}/orders`,
+    },
+    admin: {
+      login: `${API_BASE_URL}/admin/login`,
+      orders: `${API_BASE_URL}/admin/orders`,
+      updateShippingStatus: (id) => `${API_BASE_URL}/admin/orders/${id}/shipping-status`,
     },
   },
 };

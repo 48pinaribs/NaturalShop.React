@@ -87,6 +87,17 @@ function OrdersPage() {
     }
   };
 
+  const getShippingBadgeClass = (shippingStatus) => {
+    switch (shippingStatus) {
+      case "Teslim Edildi":
+        return "shipping-badge-delivered";
+      case "Kargoya Verildi":
+        return "shipping-badge-shipped";
+      default:
+        return "shipping-badge-preparing";
+    }
+  };
+
   if (loading) {
     return (
       <main className="orders-page">
@@ -191,6 +202,11 @@ function OrdersPage() {
                     {getStatusText(order.status || order.Status)}
                   </span>
                 </div>
+              </div>
+
+              <div className={`shipping-badge ${getShippingBadgeClass(order.shippingStatus || order.ShippingStatus)}`}>
+                <FiPackage className="shipping-badge-icon" />
+                <span>{order.shippingStatus || order.ShippingStatus || "Hazırlanıyor"}</span>
               </div>
 
               {order.items && order.items.length > 0 && (

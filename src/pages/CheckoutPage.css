@@ -235,6 +235,17 @@
   cursor: not-allowed;
 }
 
+.checkout-payment-note {
+  margin: 12px 0 0;
+  padding: 10px 14px;
+  border-radius: 12px;
+  background: #FFF8E1;
+  border: 1px solid #F0D98C;
+  color: #7A5C00;
+  font-size: 0.85rem;
+  line-height: 1.4;
+}
+
 .radio-card input[type="radio"] {
   width: 20px;
   height: 20px;

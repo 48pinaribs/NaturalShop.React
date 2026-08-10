@@ -223,6 +223,9 @@ function EmailLogin() {
                 Kodun geçerlilik süresi 10 dakikadır.
               </p>
             </div>
+            <p className="email-spam-note">
+              📩 Kodu birkaç dakika içinde göremiyorsan, lütfen Gereksiz/Spam klasörünü de kontrol et.
+            </p>
 
             <div className="email-input-group">
               <input

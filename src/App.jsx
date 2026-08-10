@@ -15,6 +15,8 @@ import OrderDetailsPage from "./pages/OrderDetailsPage";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
 import EmailLogin from "./pages/EmailLogin";
+import ProfilePage from "./pages/ProfilePage";
+import AdminPage from "./pages/AdminPage";
 import About from "./pages/About";
 import NotFound from "./pages/NotFound";
 import SupportContactWidget from "./components/SupportContactWidget";
@@ -37,6 +39,8 @@ function App() {
         <Route path="/order-success" element={<OrderSuccess />} />
         <Route path="/orders" element={<OrdersPage />} />
         <Route path="/orders/:id" element={<OrderDetailsPage />} />
+        <Route path="/profile" element={<ProfilePage />} />
+        <Route path="/admin" element={<AdminPage />} />
         <Route path="/login" element={<Login />} />
         <Route path="/email-login" element={<EmailLogin />} />
         {/* Eski telefonla-giriş linkleri kırılmasın diye yeni rotaya yönlendir */}

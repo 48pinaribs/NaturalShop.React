@@ -108,6 +108,13 @@ function OrderDetailsPage() {
     }
   };
 
+  const SHIPPING_STEPS = ["Hazırlanıyor", "Kargoya Verildi", "Teslim Edildi"];
+
+  const getShippingStepIndex = (shippingStatus) => {
+    const index = SHIPPING_STEPS.indexOf(shippingStatus);
+    return index === -1 ? 0 : index;
+  };
+
   const calculateTotal = () => {
     if (!order || !order.items) return 0;
     return order.items.reduce((sum, item) => {
@@ -163,6 +170,9 @@ function OrderDetailsPage() {
   const orderStatus = order.status || order.Status || "";
   const orderItems = order.items || order.Items || [];
   const totalAmount = order.totalAmount || order.TotalAmount || calculateTotal();
+  const shippingStatus = order.shippingStatus || order.ShippingStatus || "Hazırlanıyor";
+  const trackingNumber = order.trackingNumber || order.TrackingNumber;
+  const shippingStepIndex = getShippingStepIndex(shippingStatus);
 
   return (
     <main className="order-details-page">
@@ -221,8 +231,32 @@ function OrderDetailsPage() {
               <FiTruck className="info-icon" />
               <div className="info-content">
                 <span className="info-label">Teslimat Durumu</span>
-                <span className="info-value">Hazırlanıyor</span>
+                <span className="info-value">
+                  {shippingStatus}
+                  {trackingNumber && ` · Takip No: ${trackingNumber}`}
+                </span>
               </div>
+            </div>
+
+            <div className="shipping-progress">
+              {SHIPPING_STEPS.map((step, index) => (
+                <div
+                  key={step}
+                  className={`shipping-progress-step ${
+                    index <= shippingStepIndex ? "shipping-progress-step-done" : ""
+                  }`}
+                >
+                  <span className="shipping-progress-dot"></span>
+                  <span className="shipping-progress-label">{step}</span>
+                  {index < SHIPPING_STEPS.length - 1 && (
+                    <span
+                      className={`shipping-progress-line ${
+                        index < shippingStepIndex ? "shipping-progress-line-done" : ""
+                      }`}
+                    ></span>
+                  )}
+                </div>
+              ))}
             </div>
 
             {(order.shippingAddress || order.ShippingAddress) && (

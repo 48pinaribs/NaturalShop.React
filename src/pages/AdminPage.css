@@ -1,0 +1,244 @@
+.admin-login-page {
+  min-height: 70vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #FAFAF8;
+  padding: 1.5rem;
+}
+
+.admin-login-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  background: #FFFFFF;
+  border: 1px solid rgba(79, 111, 82, 0.18);
+  border-radius: 18px;
+  padding: 2.5rem 2rem;
+  width: 100%;
+  max-width: 340px;
+  box-shadow: 0 4px 20px rgba(79, 111, 82, 0.1);
+}
+
+.admin-login-icon {
+  width: 32px;
+  height: 32px;
+  color: #4F6F52;
+}
+
+.admin-login-title {
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: #2F4A2F;
+  margin: 0 0 0.5rem;
+}
+
+.admin-login-input {
+  width: 100%;
+  padding: 12px 14px;
+  border: 2px solid rgba(79, 111, 82, 0.18);
+  border-radius: 12px;
+  font-size: 14px;
+  box-sizing: border-box;
+}
+
+.admin-login-input:focus {
+  outline: none;
+  border-color: #4F6F52;
+}
+
+.admin-login-btn {
+  width: 100%;
+  padding: 12px;
+  border: none;
+  border-radius: 12px;
+  background: #4F6F52;
+  color: #FFFFFF;
+  font-weight: 600;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.admin-login-btn:hover:not(:disabled) {
+  background: #3E5A41;
+}
+
+.admin-login-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* Admin dashboard */
+.admin-page {
+  min-height: 80vh;
+  padding: 2rem 1.5rem 4rem;
+  background: #FAFAF8;
+}
+
+.admin-header {
+  max-width: 1300px;
+  margin: 0 auto 1.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.admin-header h1 {
+  font-size: 1.5rem;
+  color: #2F4A2F;
+  margin: 0;
+}
+
+.admin-header-actions {
+  display: flex;
+  gap: 8px;
+}
+
+.admin-icon-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 38px;
+  height: 38px;
+  border-radius: 10px;
+  border: 1px solid rgba(79, 111, 82, 0.25);
+  background: #FFFFFF;
+  color: #4F6F52;
+  cursor: pointer;
+}
+
+.admin-icon-btn:hover {
+  background: rgba(79, 111, 82, 0.08);
+}
+
+.spinning {
+  animation: admin-spin 0.8s linear infinite;
+}
+
+@keyframes admin-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.admin-table-wrapper {
+  max-width: 1300px;
+  margin: 0 auto;
+  overflow-x: auto;
+  background: #FFFFFF;
+  border: 1px solid rgba(79, 111, 82, 0.15);
+  border-radius: 16px;
+}
+
+.admin-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13px;
+}
+
+.admin-table th {
+  text-align: left;
+  padding: 12px 14px;
+  background: #F1F8F4;
+  color: #4F6F52;
+  font-weight: 600;
+  white-space: nowrap;
+  border-bottom: 2px solid rgba(79, 111, 82, 0.15);
+}
+
+.admin-table td {
+  padding: 12px 14px;
+  border-bottom: 1px solid rgba(79, 111, 82, 0.1);
+  vertical-align: top;
+  color: #2F4A2F;
+}
+
+.admin-customer-cell {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 150px;
+}
+
+.admin-customer-cell small {
+  color: #6B6A68;
+}
+
+.admin-items-cell {
+  min-width: 160px;
+  font-size: 12.5px;
+  color: #4F6F52;
+}
+
+.admin-payment-badge {
+  display: inline-block;
+  padding: 4px 10px;
+  border-radius: 20px;
+  font-size: 11.5px;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.admin-payment-paid {
+  background: rgba(102, 187, 106, 0.15);
+  color: #2E7D32;
+}
+
+.admin-payment-cashondelivery {
+  background: rgba(66, 133, 244, 0.12);
+  color: #2A5DB0;
+}
+
+.admin-payment-pending {
+  background: rgba(255, 167, 38, 0.15);
+  color: #B26A00;
+}
+
+.admin-payment-failed {
+  background: rgba(217, 119, 108, 0.15);
+  color: #C0392B;
+}
+
+.admin-select,
+.admin-tracking-input {
+  padding: 8px 10px;
+  border: 1px solid rgba(79, 111, 82, 0.25);
+  border-radius: 8px;
+  font-size: 12.5px;
+  font-family: inherit;
+  min-width: 130px;
+}
+
+.admin-select:focus,
+.admin-tracking-input:focus {
+  outline: none;
+  border-color: #4F6F52;
+}
+
+.admin-update-btn {
+  padding: 8px 14px;
+  border: none;
+  border-radius: 8px;
+  background: #4F6F52;
+  color: #FFFFFF;
+  font-size: 12.5px;
+  font-weight: 600;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.admin-update-btn:hover:not(:disabled) {
+  background: #3E5A41;
+}
+
+.admin-update-btn:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.admin-empty {
+  padding: 2rem;
+  text-align: center;
+  color: #6B6A68;
+}

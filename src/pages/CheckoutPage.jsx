@@ -25,10 +25,8 @@ function CheckoutPage() {
   const [shippingAddress, setShippingAddress] = useState("");
   const [fieldErrors, setFieldErrors] = useState({});
 
-  // NOT: Şu an tek aktif ödeme yöntemi Kapıda Ödeme.
-  // Kredi Kartı seçeneği, backend'de gerçek (production) Iyzico anahtarları
-  // tanımlanana kadar bilinçli olarak devre dışı bırakıldı (bkz. PaymentsController.StartPayment,
-  // bu akış hazır olduğunda burada tekrar aktif edilebilir).
+  // Ödeme yöntemi: "cod" (Kapıda Ödeme) veya "card" (Iyzico ile online kart ödemesi - şu an sandbox/test modunda)
+  const [paymentMethod, setPaymentMethod] = useState("cod");
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -81,6 +79,29 @@ function CheckoutPage() {
     };
 
     try {
+      if (paymentMethod === "card") {
+        // Kredi Kartı: Iyzico Checkout Form'unu başlat, dönen ödeme sayfasına yönlendir.
+        // Sipariş "Pending" olarak oluşturulur, ödeme Iyzico'da tamamlanınca callback
+        // sipariş durumunu "Paid" yapar (bkz. PaymentsController).
+        const response = await axios.post(
+          apiConfig.endpoints.payments.start,
+          orderData,
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+              "Content-Type": "application/json"
+            }
+          }
+        );
+
+        if (response.data && response.data.paymentPageUrl) {
+          window.location.href = response.data.paymentPageUrl;
+        } else {
+          throw new Error("Ödeme başlatılamadı");
+        }
+        return;
+      }
+
       // Kapıda Ödeme: online ödeme adımı yok, sipariş doğrudan oluşturulup onaylanır
       const response = await axios.post(
         apiConfig.endpoints.orders.create,
@@ -249,20 +270,35 @@ function CheckoutPage() {
             </h2>
             <div className="radio-options">
               <label className="radio-card">
-                <input type="radio" name="pay" defaultChecked />
+                <input
+                  type="radio"
+                  name="pay"
+                  checked={paymentMethod === "cod"}
+                  onChange={() => setPaymentMethod("cod")}
+                />
                 <div className="radio-card-content">
                   <span className="radio-card-title">Kapıda Ödeme</span>
                   <span className="radio-card-subtitle">Nakit veya Kredi Kartı</span>
                 </div>
               </label>
-              <label className="radio-card radio-card-disabled">
-                <input type="radio" name="pay" disabled />
+              <label className="radio-card">
+                <input
+                  type="radio"
+                  name="pay"
+                  checked={paymentMethod === "card"}
+                  onChange={() => setPaymentMethod("card")}
+                />
                 <div className="radio-card-content">
                   <span className="radio-card-title">Kredi Kartı (Online)</span>
-                  <span className="radio-card-subtitle">Yakında</span>
+                  <span className="radio-card-subtitle">Iyzico ile güvenli ödeme</span>
                 </div>
               </label>
             </div>
+            {paymentMethod === "card" && (
+              <p className="checkout-payment-note">
+                🧪 Test modu: bu ödeme sistemi henüz sandbox modunda çalışıyor, gerçek para çekilmez.
+              </p>
+            )}
           </div>
 
           <button
@@ -275,6 +311,11 @@ function CheckoutPage() {
                 <>
                   <FiLoader className="premium-btn-icon spinning" />
                   <span className="premium-btn-text">İşleniyor...</span>
+                </>
+              ) : paymentMethod === "card" ? (
+                <>
+                  <FiCreditCard className="premium-btn-icon" />
+                  <span className="premium-btn-text">Ödemeye Geç (Kredi Kartı)</span>
                 </>
               ) : (
                 <>

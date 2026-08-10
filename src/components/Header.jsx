@@ -293,6 +293,15 @@ const Header = () => {
                     </div>
                     <div className="user-dropdown-divider"></div>
                     <Link
+                      to="/profile"
+                      className="user-dropdown-item"
+                      role="menuitem"
+                      onClick={() => setIsUserMenuOpen(false)}
+                    >
+                      <FiUser className="dropdown-icon" />
+                      <span>Profilim</span>
+                    </Link>
+                    <Link
                       to="/orders"
                       className="user-dropdown-item"
                       role="menuitem"
@@ -393,6 +402,19 @@ const Header = () => {
                   </Link>
                 ))}
               </div>
+
+              {user && (
+                <Link
+                  to="/profile"
+                  className={`mobile-nav-link ${
+                    isActiveRoute("/profile") ? "active" : ""
+                  }`}
+                  onClick={closeMobileMenu}
+                >
+                  <FiUser className="mobile-nav-icon" />
+                  Profilim
+                </Link>
+              )}
 
               {user && (
                 <Link
