@@ -23,7 +23,7 @@ function OrderDetailsPage() {
   useEffect(() => {
     const token = localStorage.getItem("token");
     if (!token) {
-      navigate("/phone-login");
+      navigate("/email-login");
       return;
     }
 
@@ -41,7 +41,7 @@ function OrderDetailsPage() {
         
         if (!res.ok) {
           if (res.status === 401) {
-            navigate("/phone-login");
+            navigate("/email-login");
             return;
           }
           if (res.status === 404) {

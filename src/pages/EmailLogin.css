@@ -1,5 +1,5 @@
-/* Phone Login Page Container */
-.phone-login-page {
+/* Email Login Page Container */
+.email-login-page {
   min-height: calc(100vh - 200px);
   display: flex;
   align-items: center;
@@ -16,7 +16,7 @@
   position: relative;
 }
 
-.phone-login-page::before {
+.email-login-page::before {
   content: "";
   position: absolute;
   top: 0;
@@ -29,8 +29,8 @@
   pointer-events: none;
 }
 
-/* Phone Login Card */
-.phone-login-card {
+/* Email Login Card */
+.email-login-card {
   width: 100%;
   max-width: 420px;
   padding: 32px 28px;
@@ -43,19 +43,19 @@
   border: 2px solid rgba(79, 111, 82, 0.25);
 }
 
-.phone-login-card:hover {
+.email-login-card:hover {
   box-shadow: 0 16px 48px rgba(79, 111, 82, 0.35), 0 6px 20px rgba(111, 175, 122, 0.25), inset 0 1px 0 rgba(79, 111, 82, 0.1);
   border-color: rgba(79, 111, 82, 0.4);
   background: linear-gradient(180deg, #FFFFFF 0%, #E8F5E9 100%);
 }
 
 /* Header */
-.phone-login-header {
+.email-login-header {
   text-align: center;
   margin-bottom: 32px;
 }
 
-.phone-login-title {
+.email-login-title {
   font-size: 24px;
   font-weight: 700;
   color: #4F6F52;
@@ -63,7 +63,7 @@
   line-height: 1.3;
 }
 
-.phone-login-subtitle {
+.email-login-subtitle {
   font-size: 15px;
   color: #6B7A6F;
   margin: 0;
@@ -71,20 +71,20 @@
 }
 
 /* Form */
-.phone-login-form {
+.email-login-form {
   display: flex;
   flex-direction: column;
   gap: 16px;
 }
 
 /* Input Group */
-.phone-input-group {
+.email-input-group {
   position: relative;
   display: flex;
   align-items: center;
 }
 
-.phone-input-icon {
+.email-input-icon {
   position: absolute;
   left: 16px;
   color: #6B7A6F;
@@ -93,7 +93,7 @@
   z-index: 1;
 }
 
-.phone-input {
+.email-input {
   width: 100%;
   padding: 14px 16px 14px 48px;
   font-size: 16px;
@@ -105,29 +105,29 @@
   outline: none;
 }
 
-.phone-input:focus {
+.email-input:focus {
   border-color: #4F6F52;
   box-shadow: 0 0 0 3px rgba(79, 111, 82, 0.1);
   background: #FFFFFF;
 }
 
-.phone-input.is-invalid {
+.email-input.is-invalid {
   border-color: #E74C3C;
   background: #FFF5F5;
 }
 
-.phone-input.is-invalid:focus {
+.email-input.is-invalid:focus {
   box-shadow: 0 0 0 3px rgba(231, 76, 60, 0.1);
 }
 
-.phone-input:disabled {
+.email-input:disabled {
   background: #F5F5F5;
   cursor: not-allowed;
   opacity: 0.7;
 }
 
 /* Code Input */
-.phone-code-input {
+.email-code-input {
   text-align: center;
   font-size: 20px;
   letter-spacing: 4px;
@@ -135,7 +135,7 @@
   padding: 14px 16px;
 }
 
-.phone-code-info {
+.email-code-info {
   display: flex;
   align-items: center;
   gap: 12px;
@@ -145,26 +145,26 @@
   margin-bottom: 8px;
 }
 
-.phone-code-icon {
+.email-code-icon {
   color: #4F6F52;
   font-size: 20px;
   flex-shrink: 0;
 }
 
-.phone-code-text {
+.email-code-text {
   font-size: 14px;
   color: #4F6F52;
   margin: 0;
   line-height: 1.4;
 }
 
-.phone-code-text strong {
+.email-code-text strong {
   font-weight: 600;
   color: #2C3E2D;
 }
 
 /* Error Text */
-.phone-error-text {
+.email-error-text {
   display: block;
   font-size: 13px;
   color: #E74C3C;
@@ -173,7 +173,7 @@
 }
 
 /* Button */
-.phone-login-btn {
+.email-login-btn {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -191,29 +191,29 @@
   margin-top: 8px;
 }
 
-.phone-login-btn:hover:not(:disabled) {
+.email-login-btn:hover:not(:disabled) {
   background: linear-gradient(135deg, #3D5A40 0%, #5A9A65 100%);
   box-shadow: 0 6px 16px rgba(79, 111, 82, 0.4);
   transform: translateY(-1px);
 }
 
-.phone-login-btn:active:not(:disabled) {
+.email-login-btn:active:not(:disabled) {
   transform: translateY(0);
   box-shadow: 0 2px 8px rgba(79, 111, 82, 0.3);
 }
 
-.phone-login-btn:disabled {
+.email-login-btn:disabled {
   opacity: 0.7;
   cursor: not-allowed;
   transform: none;
 }
 
-.phone-btn-icon {
+.email-btn-icon {
   font-size: 18px;
 }
 
 /* Back Button */
-.phone-back-btn {
+.email-back-btn {
   background: transparent;
   border: none;
   color: #6B7A6F;
@@ -225,27 +225,27 @@
   text-align: center;
 }
 
-.phone-back-btn:hover:not(:disabled) {
+.email-back-btn:hover:not(:disabled) {
   color: #4F6F52;
 }
 
-.phone-back-btn:disabled {
+.email-back-btn:disabled {
   opacity: 0.5;
   cursor: not-allowed;
 }
 
 /* Spinner */
-.phone-spinner {
+.email-spinner {
   display: inline-block;
   width: 16px;
   height: 16px;
   border: 2px solid rgba(255, 255, 255, 0.3);
   border-top-color: #FFFFFF;
   border-radius: 50%;
-  animation: phone-spin 0.6s linear infinite;
+  animation: email-spin 0.6s linear infinite;
 }
 
-@keyframes phone-spin {
+@keyframes email-spin {
   to {
     transform: rotate(360deg);
   }
@@ -253,33 +253,33 @@
 
 /* Responsive */
 @media (max-width: 480px) {
-  .phone-login-page {
+  .email-login-page {
     padding: 16px;
   }
 
-  .phone-login-card {
+  .email-login-card {
     padding: 24px 20px;
   }
 
-  .phone-login-title {
+  .email-login-title {
     font-size: 22px;
   }
 
-  .phone-login-subtitle {
+  .email-login-subtitle {
     font-size: 14px;
   }
 
-  .phone-input {
+  .email-input {
     font-size: 15px;
     padding: 12px 14px 12px 44px;
   }
 
-  .phone-code-input {
+  .email-code-input {
     font-size: 18px;
     letter-spacing: 3px;
   }
 
-  .phone-login-btn {
+  .email-login-btn {
     padding: 12px 20px;
     font-size: 15px;
   }

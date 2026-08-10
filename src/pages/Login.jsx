@@ -273,9 +273,9 @@ function Login() {
             </a>
           </p>
           <p>
-            Telefon numaranla giriş yapmak ister misin?{" "}
-            <a href="/phone-login" className="signup-link">
-              Telefonla Giriş
+            Şifre olmadan, e-postana gelecek kodla giriş yapmak ister misin?{" "}
+            <a href="/email-login" className="signup-link">
+              Kodla Giriş
             </a>
           </p>
         </div>

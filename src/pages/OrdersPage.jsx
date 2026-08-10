@@ -13,7 +13,7 @@ function OrdersPage() {
   useEffect(() => {
     const token = localStorage.getItem("token");
     if (!token) {
-      navigate("/phone-login");
+      navigate("/email-login");
       return;
     }
 
@@ -31,7 +31,7 @@ function OrdersPage() {
         
         if (!res.ok) {
           if (res.status === 401) {
-            navigate("/phone-login");
+            navigate("/email-login");
             return;
           }
           throw new Error("Siparişler yüklenemedi");

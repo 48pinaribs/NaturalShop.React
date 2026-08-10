@@ -7,7 +7,6 @@ import {
   FiUser,
   FiLogOut,
   FiPackage,
-  FiPhone,
 } from "react-icons/fi";
 import { useCart } from "../context/CartContext";
 import logoFull from "../assets/logo2.png";
@@ -135,29 +134,6 @@ const Header = () => {
       return (parts[0][0] + parts[parts.length - 1][0]).toUpperCase();
     }
     return fullName.substring(0, 2).toUpperCase();
-  };
-
-  // Telefon numarası ile giriş yapıp yapmadığını kontrol et
-  const isPhoneLogin = (user) => {
-    if (!user) return false;
-    // Email @naturalshop.local ile bitiyorsa veya phoneNumber varsa telefon ile giriş yapmıştır
-    return (
-      (user.email && user.email.endsWith("@naturalshop.local")) ||
-      (user.phoneNumber && !user.email?.includes("@"))
-    );
-  };
-
-  // Telefon numarasını formatla (son 4 haneyi göster)
-  const formatPhoneNumber = (phoneNumber) => {
-    if (!phoneNumber) return "";
-    // 905551234567 -> 0555 *** 4567
-    const cleaned = phoneNumber.replace(/\D/g, "");
-    if (cleaned.length >= 10) {
-      const last4 = cleaned.slice(-4);
-      const middle = cleaned.slice(-8, -4);
-      return `0${middle} *** ${last4}`;
-    }
-    return phoneNumber;
   };
 
   const cartCount = cartItems.reduce((sum, item) => sum + item.quantity, 0);
@@ -303,42 +279,17 @@ const Header = () => {
                   aria-expanded={isUserMenuOpen}
                   aria-haspopup="true"
                 >
-                  {isPhoneLogin(user) ? (
-                    <span
-                      className="user-avatar user-avatar-phone"
-                      aria-hidden="true"
-                    >
-                      <FiPhone className="phone-icon" />
-                    </span>
-                  ) : (
-                    <span className="user-avatar" aria-hidden="true">
-                      {getInitials(user.fullName)}
-                    </span>
-                  )}
+                  <span className="user-avatar" aria-hidden="true">
+                    {getInitials(user.fullName)}
+                  </span>
                 </button>
 
                 {/* User Dropdown */}
                 {isUserMenuOpen && (
                   <div className="user-dropdown" role="menu">
                     <div className="user-dropdown-header">
-                      {isPhoneLogin(user) ? (
-                        <>
-                          <span className="user-name">Hoş Geldiniz</span>
-                          <span className="user-phone">
-                            <FiPhone className="phone-icon-small" />
-                            {formatPhoneNumber(
-                              user.phoneNumber ||
-                                user.email?.replace("@naturalshop.local", "") ||
-                                ""
-                            )}
-                          </span>
-                        </>
-                      ) : (
-                        <>
-                          <span className="user-name">{user.fullName}</span>
-                          <span className="user-email">{user.email}</span>
-                        </>
-                      )}
+                      <span className="user-name">{user.fullName}</span>
+                      <span className="user-email">{user.email}</span>
                     </div>
                     <div className="user-dropdown-divider"></div>
                     <Link
@@ -363,9 +314,9 @@ const Header = () => {
               </div>
             ) : (
               <Link
-                to="/phone-login"
+                to="/email-login"
                 className={`header-action-link ${
-                  isActiveRoute("/phone-login") ? "active" : ""
+                  isActiveRoute("/email-login") ? "active" : ""
                 }`}
                 onClick={closeMobileMenu}
               >
@@ -403,34 +354,13 @@ const Header = () => {
             {/* User Info in Mobile Menu */}
             {user && (
               <div className="mobile-user-info">
-                {isPhoneLogin(user) ? (
-                  <>
-                    <div className="mobile-user-avatar mobile-user-avatar-phone">
-                      <FiPhone className="phone-icon-mobile" />
-                    </div>
-                    <div className="mobile-user-details">
-                      <span className="mobile-user-name">Hoş Geldiniz</span>
-                      <span className="mobile-user-phone">
-                        <FiPhone className="phone-icon-small" />
-                        {formatPhoneNumber(
-                          user.phoneNumber ||
-                            user.email?.replace("@naturalshop.local", "") ||
-                            ""
-                        )}
-                      </span>
-                    </div>
-                  </>
-                ) : (
-                  <>
-                    <div className="mobile-user-avatar">
-                      {getInitials(user.fullName)}
-                    </div>
-                    <div className="mobile-user-details">
-                      <span className="mobile-user-name">{user.fullName}</span>
-                      <span className="mobile-user-email">{user.email}</span>
-                    </div>
-                  </>
-                )}
+                <div className="mobile-user-avatar">
+                  {getInitials(user.fullName)}
+                </div>
+                <div className="mobile-user-details">
+                  <span className="mobile-user-name">{user.fullName}</span>
+                  <span className="mobile-user-email">{user.email}</span>
+                </div>
               </div>
             )}
 
@@ -502,9 +432,9 @@ const Header = () => {
                 </button>
               ) : (
                 <Link
-                  to="/phone-login"
+                  to="/email-login"
                   className={`mobile-nav-link ${
-                    isActiveRoute("/phone-login") ? "active" : ""
+                    isActiveRoute("/email-login") ? "active" : ""
                   }`}
                   onClick={closeMobileMenu}
                 >

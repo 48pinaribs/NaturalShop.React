@@ -37,7 +37,7 @@ function CheckoutPage() {
     const token = localStorage.getItem("token");
     if (!token) {
       toast.error("Ödeme yapmak için lütfen giriş yapın");
-      navigate("/phone-login");
+      navigate("/email-login");
       return;
     }
 
@@ -117,7 +117,7 @@ function CheckoutPage() {
           errorMessage = "Oturum süreniz dolmuş. Lütfen tekrar giriş yapın.";
           localStorage.removeItem("token");
           localStorage.removeItem("user");
-          navigate("/phone-login");
+          navigate("/email-login");
           return;
         }
       } else if (error.request) {

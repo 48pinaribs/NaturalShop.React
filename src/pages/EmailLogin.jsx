@@ -1,46 +1,24 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { FiPhone, FiMessageCircle } from "react-icons/fi";
-import { FaWhatsapp } from "react-icons/fa";
+import { FiMail, FiMessageCircle } from "react-icons/fi";
 import axios from "axios";
 import { toast } from "react-toastify";
 import apiConfig from "../config/api.js";
-import "./PhoneLogin.css";
+import "./EmailLogin.css";
 
-function PhoneLogin() {
+function EmailLogin() {
   const navigate = useNavigate();
-  const [step, setStep] = useState(1); // 1: telefon numarası, 2: kod doğrulama
-  const [phoneNumber, setPhoneNumber] = useState("");
+  const [step, setStep] = useState(1); // 1: e-posta adresi, 2: kod doğrulama
+  const [email, setEmail] = useState("");
   const [code, setCode] = useState("");
   const [loading, setLoading] = useState(false);
-  const [phoneError, setPhoneError] = useState("");
+  const [emailError, setEmailError] = useState("");
   const [codeError, setCodeError] = useState("");
 
-  // Telefon numarası formatlaması (5xx xxx xx xx)
-  const formatPhoneNumber = (value) => {
-    // Sadece rakamları al
-    const numbers = value.replace(/\D/g, "");
-    
-    // Maksimum 10 rakam
-    const limitedNumbers = numbers.slice(0, 10);
-    
-    // Formatla: 5xx xxx xx xx
-    if (limitedNumbers.length === 0) return "";
-    if (limitedNumbers.length <= 3) return limitedNumbers;
-    if (limitedNumbers.length <= 6) {
-      return `${limitedNumbers.slice(0, 3)} ${limitedNumbers.slice(3)}`;
-    }
-    if (limitedNumbers.length <= 8) {
-      return `${limitedNumbers.slice(0, 3)} ${limitedNumbers.slice(3, 6)} ${limitedNumbers.slice(6)}`;
-    }
-    return `${limitedNumbers.slice(0, 3)} ${limitedNumbers.slice(3, 6)} ${limitedNumbers.slice(6, 8)} ${limitedNumbers.slice(8)}`;
-  };
-
-  const handlePhoneChange = (e) => {
-    const formatted = formatPhoneNumber(e.target.value);
-    setPhoneNumber(formatted);
-    if (phoneError) {
-      setPhoneError("");
+  const handleEmailChange = (e) => {
+    setEmail(e.target.value);
+    if (emailError) {
+      setEmailError("");
     }
   };
 
@@ -53,14 +31,15 @@ function PhoneLogin() {
     }
   };
 
-  const validatePhone = () => {
-    const numbers = phoneNumber.replace(/\D/g, "");
-    if (!numbers || numbers.length === 0) {
-      setPhoneError("Telefon numarası gereklidir");
+  const validateEmail = () => {
+    const trimmed = email.trim();
+    if (!trimmed) {
+      setEmailError("E-posta adresi gereklidir");
       return false;
     }
-    if (numbers.length < 10) {
-      setPhoneError("Geçerli bir telefon numarası giriniz");
+    // Basit e-posta format kontrolü (asıl doğrulama backend'de yapılıyor)
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(trimmed)) {
+      setEmailError("Geçerli bir e-posta adresi giriniz");
       return false;
     }
     return true;
@@ -80,23 +59,20 @@ function PhoneLogin() {
 
   const handleSendCode = async (e) => {
     e.preventDefault();
-    
-    if (!validatePhone()) {
+
+    if (!validateEmail()) {
       return;
     }
 
     setLoading(true);
-    setPhoneError("");
+    setEmailError("");
 
     try {
-      // Telefon numarasını temizle (sadece rakamlar)
-      const cleanPhone = phoneNumber.replace(/\D/g, "");
-      // Eğer 10 haneli ise başına 90 ekle (Türkiye kodu)
-      const phoneWithCountryCode = cleanPhone.length === 10 ? `90${cleanPhone}` : cleanPhone;
+      const trimmedEmail = email.trim().toLowerCase();
 
       const response = await axios.post(
         apiConfig.endpoints.auth.sendCode,
-        { phoneNumber: phoneWithCountryCode },
+        { email: trimmedEmail },
         {
           headers: {
             "Content-Type": "application/json",
@@ -105,7 +81,7 @@ function PhoneLogin() {
       );
 
       if (response.status === 200 || response.status === 201) {
-        toast.success("Doğrulama kodu gönderildi! 📱");
+        toast.success("Doğrulama kodu e-postana gönderildi! 📧");
         setStep(2);
       }
     } catch (error) {
@@ -114,7 +90,7 @@ function PhoneLogin() {
         error.response?.data?.error ||
         "Kod gönderilirken bir hata oluştu. Lütfen tekrar deneyin.";
       toast.error(errorMessage);
-      setPhoneError(errorMessage);
+      setEmailError(errorMessage);
     } finally {
       setLoading(false);
     }
@@ -131,14 +107,12 @@ function PhoneLogin() {
     setCodeError("");
 
     try {
-      // Telefon numarasını temizle
-      const cleanPhone = phoneNumber.replace(/\D/g, "");
-      const phoneWithCountryCode = cleanPhone.length === 10 ? `90${cleanPhone}` : cleanPhone;
+      const trimmedEmail = email.trim().toLowerCase();
 
       const response = await axios.post(
         apiConfig.endpoints.auth.verifyCode,
         {
-          phoneNumber: phoneWithCountryCode,
+          email: trimmedEmail,
           code: code,
         },
         {
@@ -151,7 +125,7 @@ function PhoneLogin() {
       if (response.data.token) {
         // Token'ı localStorage'a kaydet
         localStorage.setItem("token", response.data.token);
-        
+
         // Kullanıcı bilgisi varsa kaydet
         if (response.data.user) {
           localStorage.setItem("user", JSON.stringify(response.data.user));
@@ -161,7 +135,7 @@ function PhoneLogin() {
         window.dispatchEvent(new Event("authchange"));
 
         toast.success("Giriş başarılı! 🎉");
-        
+
         // Ödeme sayfasına yönlendir
         setTimeout(() => {
           navigate("/checkout");
@@ -182,56 +156,56 @@ function PhoneLogin() {
   };
 
   return (
-    <div className="phone-login-page">
-      <div className="phone-login-card">
+    <div className="email-login-page">
+      <div className="email-login-card">
         {/* Header */}
-        <div className="phone-login-header">
-          <h1 className="phone-login-title">Hesap açmana gerek yok 🎉</h1>
-          <p className="phone-login-subtitle">
-            Sadece WhatsApp numaranı gir, sipariş durumunu buradan gönderelim.
+        <div className="email-login-header">
+          <h1 className="email-login-title">Hesap açmana gerek yok 🎉</h1>
+          <p className="email-login-subtitle">
+            Sadece e-posta adresini gir, sipariş durumunu buradan gönderelim.
           </p>
         </div>
 
-        {/* Step 1: Telefon Numarası */}
+        {/* Step 1: E-posta Adresi */}
         {step === 1 && (
-          <form onSubmit={handleSendCode} className="phone-login-form">
-            <div className="phone-input-group">
-              <FiPhone className="phone-input-icon" aria-hidden="true" />
+          <form onSubmit={handleSendCode} className="email-login-form">
+            <div className="email-input-group">
+              <FiMail className="email-input-icon" aria-hidden="true" />
               <input
-                type="tel"
-                id="phoneNumber"
-                className={`phone-input ${phoneError ? "is-invalid" : ""}`}
-                placeholder="5xx xxx xx xx"
-                value={phoneNumber}
-                onChange={handlePhoneChange}
-                aria-label="Telefon numarası"
-                aria-invalid={phoneError ? "true" : "false"}
-                aria-describedby={phoneError ? "phone-error" : undefined}
-                autoComplete="tel"
+                type="email"
+                id="email"
+                className={`email-input ${emailError ? "is-invalid" : ""}`}
+                placeholder="ornek@eposta.com"
+                value={email}
+                onChange={handleEmailChange}
+                aria-label="E-posta adresi"
+                aria-invalid={emailError ? "true" : "false"}
+                aria-describedby={emailError ? "email-error" : undefined}
+                autoComplete="email"
                 disabled={loading}
-                maxLength={14} // 5xx xxx xx xx formatı için
+                autoFocus
               />
             </div>
-            {phoneError && (
-              <span id="phone-error" className="phone-error-text" role="alert">
-                {phoneError}
+            {emailError && (
+              <span id="email-error" className="email-error-text" role="alert">
+                {emailError}
               </span>
             )}
 
             <button
               type="submit"
-              className="phone-login-btn"
+              className="email-login-btn"
               disabled={loading}
               aria-busy={loading}
             >
               {loading ? (
                 <>
-                  <span className="phone-spinner" aria-hidden="true"></span>
+                  <span className="email-spinner" aria-hidden="true"></span>
                   <span>Gönderiliyor...</span>
                 </>
               ) : (
                 <>
-                  <FaWhatsapp className="phone-btn-icon" />
+                  <FiMail className="email-btn-icon" />
                   <span>Kodu Gönder</span>
                 </>
               )}
@@ -241,19 +215,20 @@ function PhoneLogin() {
 
         {/* Step 2: Kod Doğrulama */}
         {step === 2 && (
-          <form onSubmit={handleVerifyCode} className="phone-login-form">
-            <div className="phone-code-info">
-              <FiMessageCircle className="phone-code-icon" />
-              <p className="phone-code-text">
-                <strong>{phoneNumber}</strong> numarasına gönderilen kodu girin
+          <form onSubmit={handleVerifyCode} className="email-login-form">
+            <div className="email-code-info">
+              <FiMessageCircle className="email-code-icon" />
+              <p className="email-code-text">
+                <strong>{email}</strong> adresine gönderilen kodu girin.
+                Kodun geçerlilik süresi 10 dakikadır.
               </p>
             </div>
 
-            <div className="phone-input-group">
+            <div className="email-input-group">
               <input
                 type="text"
                 id="code"
-                className={`phone-input phone-code-input ${codeError ? "is-invalid" : ""}`}
+                className={`email-input email-code-input ${codeError ? "is-invalid" : ""}`}
                 placeholder="Doğrulama kodu"
                 value={code}
                 onChange={handleCodeChange}
@@ -267,25 +242,25 @@ function PhoneLogin() {
               />
             </div>
             {codeError && (
-              <span id="code-error" className="phone-error-text" role="alert">
+              <span id="code-error" className="email-error-text" role="alert">
                 {codeError}
               </span>
             )}
 
             <button
               type="submit"
-              className="phone-login-btn"
+              className="email-login-btn"
               disabled={loading}
               aria-busy={loading}
             >
               {loading ? (
                 <>
-                  <span className="phone-spinner" aria-hidden="true"></span>
+                  <span className="email-spinner" aria-hidden="true"></span>
                   <span>Doğrulanıyor...</span>
                 </>
               ) : (
                 <>
-                  <span className="phone-btn-icon">✓</span>
+                  <span className="email-btn-icon">✓</span>
                   <span>Giriş Yap</span>
                 </>
               )}
@@ -293,7 +268,7 @@ function PhoneLogin() {
 
             <button
               type="button"
-              className="phone-back-btn"
+              className="email-back-btn"
               onClick={() => {
                 setStep(1);
                 setCode("");
@@ -301,7 +276,7 @@ function PhoneLogin() {
               }}
               disabled={loading}
             >
-              ← Telefon numarasını değiştir
+              ← E-posta adresini değiştir
             </button>
           </form>
         )}
@@ -310,5 +285,4 @@ function PhoneLogin() {
   );
 }
 
-export default PhoneLogin;
-
+export default EmailLogin;

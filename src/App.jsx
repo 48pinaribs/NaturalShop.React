@@ -1,4 +1,4 @@
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, Navigate } from "react-router-dom";
 import ProductDetails from "./pages/ProductDetails";
 import ProductsPage from "./pages/ProductsPage";
 import Header from "./components/Header";
@@ -14,7 +14,7 @@ import OrdersPage from "./pages/OrdersPage";
 import OrderDetailsPage from "./pages/OrderDetailsPage";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
-import PhoneLogin from "./pages/PhoneLogin";
+import EmailLogin from "./pages/EmailLogin";
 import About from "./pages/About";
 import NotFound from "./pages/NotFound";
 import SupportContactWidget from "./components/SupportContactWidget";
@@ -38,7 +38,9 @@ function App() {
         <Route path="/orders" element={<OrdersPage />} />
         <Route path="/orders/:id" element={<OrderDetailsPage />} />
         <Route path="/login" element={<Login />} />
-        <Route path="/phone-login" element={<PhoneLogin />} />
+        <Route path="/email-login" element={<EmailLogin />} />
+        {/* Eski telefonla-giriş linkleri kırılmasın diye yeni rotaya yönlendir */}
+        <Route path="/phone-login" element={<Navigate to="/email-login" replace />} />
         <Route path="/register" element={<Register />} />
         <Route path="/about" element={<About />} />
         <Route path="*" element={<NotFound />} />
