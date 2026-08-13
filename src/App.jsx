@@ -18,6 +18,8 @@ import EmailLogin from "./pages/EmailLogin";
 import ProfilePage from "./pages/ProfilePage";
 import AdminPage from "./pages/AdminPage";
 import About from "./pages/About";
+import Contact from "./pages/Contact";
+import Terms from "./pages/Terms";
 import NotFound from "./pages/NotFound";
 import SupportContactWidget from "./components/SupportContactWidget";
 import ScrollToTop from "./components/ScrollToTop";
@@ -47,6 +49,8 @@ function App() {
         <Route path="/phone-login" element={<Navigate to="/email-login" replace />} />
         <Route path="/register" element={<Register />} />
         <Route path="/about" element={<About />} />
+        <Route path="/contact" element={<Contact />} />
+        <Route path="/terms" element={<Terms />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
 

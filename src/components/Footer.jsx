@@ -237,7 +237,7 @@ const Footer = () => {
                 <FiMapPin className="contact-icon" />
                 <span>Muğla, Dalaman</span>
               </a>
-              <a href="tel:+905551234567" className="footer-contact-item">
+              <a href="tel:+905439434472" className="footer-contact-item">
                 <FiPhone className="contact-icon" />
                 <span>+90 (543) 943 44 72</span>
               </a>

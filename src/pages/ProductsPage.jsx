@@ -18,46 +18,27 @@ function ProductsPage({ category: categoryProp }) {
         setLoading(true);
         setError(null);
         const apiUrl = apiConfig.endpoints.products.list;
-        console.log("🔍 API URL:", apiUrl);
-        console.log("🔍 API Base URL:", apiConfig.API_BASE_URL);
 
         const res = await fetch(apiUrl);
-        console.log("📡 Fetch completed");
-        console.log("📡 Response Status:", res.status, res.statusText);
-        console.log("📡 Response OK:", res.ok);
-        console.log(
-          "📡 Response Headers:",
-          Object.fromEntries(res.headers.entries()),
-        );
 
         if (!res.ok) {
-          const errorText = await res.text();
-          console.error("❌ Error Response Body:", errorText);
           throw new Error(
             `HTTP error! status: ${res.status} - ${res.statusText}`,
           );
         }
 
         const data = await res.json();
-        console.log("✅ Products received:", data);
-        console.log(
-          "✅ Products count:",
-          Array.isArray(data) ? data.length : "Not an array",
-        );
-        console.log("✅ Products data type:", typeof data);
-        if (Array.isArray(data) && data.length > 0) {
-          console.log("✅ First product:", data[0]);
-        }
 
         // Filter products by category if category is specified
         let filteredProducts = data;
-        console.log("🔍 Category:", category);
-        console.log(
-          "🔍 Original products count:",
-          Array.isArray(data) ? data.length : 0,
-        );
 
         if (category) {
+          // NOT: Bu terimler ürün adı/açıklaması/kategorisi içinde substring olarak aranıyor.
+          // Tek başına çok genel kelimeler (örn. "taze", "zeytin", "bal") kullanılırsa,
+          // alakasız ürünlerin açıklama metninde geçen o kelime yüzünden yanlışlıkla
+          // eşleşme oluşur (örn. "taze" -> zeytinyağının açıklamasındaki "taze zeytin
+          // kokulu" ifadesiyle eşleşir). Bu yüzden burada sadece kategoriye özgü,
+          // yeterince spesifik ifadeler kullanılıyor.
           const categoryMap = {
             zeytinyagi: ["yağlar", "zeytinyağı", "zeytinyagi", "oil", "zeytin"],
             incir: [
@@ -69,7 +50,6 @@ function ProductsPage({ category: categoryProp }) {
             ],
             "bal-pekmez": [
               "bal & pekmez",
-              "bal",
               "pekmez",
               "honey",
               "molasses",
@@ -79,14 +59,14 @@ function ProductsPage({ category: categoryProp }) {
               "kuru incir",
               "dried fruits",
             ],
-            "taze-meyveler": ["taze meyveler", "taze", "fresh fruits"],
+            "taze-meyveler": ["taze meyveler", "fresh fruits"],
             "kurutulmus-sebzeler": [
               "kurutulmuş sebzeler",
               "kuru domates",
               "kuru biber",
               "dried vegetables",
             ],
-            konserveler: ["konserveler", "zeytin", "salça", "preserves"],
+            konserveler: ["konserveler", "salça", "preserves"],
             "sut-urunleri": ["süt ürünleri", "peynir", "yumurta", "dairy"],
             "sifali-bitkiler": ["şifalı bitkiler", "adaçayı", "herbal"],
             baharatlar: ["baharatlar", "toz biber", "spices"],
@@ -95,7 +75,6 @@ function ProductsPage({ category: categoryProp }) {
           const searchTerms = categoryMap[category.toLowerCase()] || [
             category.toLowerCase(),
           ];
-          console.log("🔍 Search terms:", searchTerms);
           filteredProducts = data.filter((product) => {
             const name = (product.name || "").toLowerCase();
             const description = (product.description || "").toLowerCase();
@@ -107,10 +86,8 @@ function ProductsPage({ category: categoryProp }) {
                 productCategory.includes(term),
             );
           });
-          console.log("🔍 Filtered products count:", filteredProducts.length);
         }
 
-        console.log("✅ Setting products:", filteredProducts.length);
         setProducts(filteredProducts);
       } catch (err) {
         console.error("Error fetching products:", err);

@@ -1,0 +1,42 @@
+.terms-page {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 48px 24px 80px;
+}
+
+.terms-title {
+  font-family: 'Playfair Display', 'Cormorant Garamond', serif;
+  font-size: 40px;
+  font-weight: 700;
+  color: #2F4A2F;
+  margin: 0 0 8px 0;
+}
+
+.terms-updated {
+  color: #6B6A68;
+  font-size: 14px;
+  margin: 0 0 40px 0;
+}
+
+.terms-section {
+  margin-bottom: 32px;
+}
+
+.terms-section h2 {
+  font-size: 20px;
+  font-weight: 600;
+  color: #2F4A2F;
+  margin: 0 0 12px 0;
+}
+
+.terms-section p {
+  font-size: 15px;
+  line-height: 1.7;
+  color: #4A4A48;
+  margin: 0;
+}
+
+.terms-section a {
+  color: #4F6F52;
+  font-weight: 600;
+}
