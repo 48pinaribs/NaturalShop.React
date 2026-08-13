@@ -62,7 +62,7 @@ const Footer = () => {
     {
       name: "WhatsApp",
       icon: FaWhatsapp,
-      url: "https://wa.me/905551234567",
+      url: "https://wa.me/905439434472",
       ariaLabel: "WhatsApp ile iletişime geçin",
     },
   ];
