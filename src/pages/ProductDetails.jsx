@@ -7,16 +7,21 @@ import apiConfig from "../config/api.js";
 import ProductDetailSkeleton from "../components/ProductDetailSkeleton";
 
 // URL'nin tam URL olup olmadığını kontrol eden helper fonksiyon
+//
+// NOT: Ürün görselleri artık backend'den (Render, soğuk başlangıç/çökme
+// riski yüzünden yavaş/güvenilmez) değil, bu React uygulamasının kendi
+// public/images klasöründen (Vercel CDN üzerinden, anında) sunuluyor —
+// tıpkı JourneySlider'daki anasayfa görselleri gibi. Backend API hâlâ
+// ürünün görsel *yolunu* ("/images/urun1.jpg") döndürüyor, biz sadece
+// artık başına backend adresini eklemiyoruz, olduğu gibi (aynı origin,
+// yani Vercel) kullanıyoruz.
 const ensureFullUrl = (url) => {
   if (!url) return "";
   // Eğer zaten tam URL ise (http:// veya https:// ile başlıyorsa) olduğu gibi döndür
   if (url.startsWith("http://") || url.startsWith("https://")) {
     return url;
   }
-  // Değilse sunucunun kök adresini ekle (ortama göre .env üzerinden gelir)
-  // URL'nin başındaki / karakterini kaldır (varsa)
-  const cleanUrl = url.startsWith("/") ? url.substring(1) : url;
-  return `${apiConfig.SERVER_BASE_URL}/${cleanUrl}`;
+  return url.startsWith("/") ? url : `/${url}`;
 };
 
 function ProductDetails() {
